@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "358521270357",
+    "project_id": "tecniswim",
+    "storage_bucket": "tecniswim.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:358521270357:android:6137d2fdc410d2925aa4dc",
+        "android_client_info": {
+          "package_name": "com.project.tecniswim"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "358521270357-vkmm0gg12p33m69kh1sq47drc58jc7kd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.project.tecniswim",
+            "certificate_hash": "a627791c06d0c158c1bba1c9ee27bc1c875ed08d"
+          }
+        },
+        {
+          "client_id": "358521270357-bd7eee3e7dhrdl7kk6c9rhq1p8k6225t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCs5SV6ZP2Ro7e41imClcJ0-AnZuwocNeg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "358521270357-bd7eee3e7dhrdl7kk6c9rhq1p8k6225t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
