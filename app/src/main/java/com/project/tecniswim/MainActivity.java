@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         // Rellena con datos de usuario
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            // 1) Foto de perfil
+            // Foto de perfil
             Uri photoUrl = user.getPhotoUrl();
             if (photoUrl != null) {
                 Glide.with(this)
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                         .circleCrop()
                         .into(ivProfile);
             }
-            // 2) Correo
+            // Correo
             tvEmail.setText(user.getEmail());
         }
 
