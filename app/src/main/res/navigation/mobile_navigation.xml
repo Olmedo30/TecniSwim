@@ -3,13 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@id/nav_home">
 
+    <!-- HomeFragment con la acción a QuestionsFragment -->
     <fragment
         android:id="@+id/nav_home"
         android:name="com.project.tecniswim.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+
+        <!-- Acción hacia QuestionsFragment, sin Safe Args -->
+        <action
+            android:id="@+id/action_home_to_questions"
+            app:destination="@id/nav_questions" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_gallery"
@@ -22,4 +29,17 @@
         android:name="com.project.tecniswim.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+
+    <!-- Nuevo fragmento de preguntas -->
+    <fragment
+        android:id="@+id/nav_questions"
+        android:name="com.project.tecniswim.ui.home.QuestionsFragment"
+        android:label="Preguntas"
+        tools:layout="@layout/fragment_questions">
+
+        <!-- Argumento que recibirá el estilo -->
+        <argument
+            android:name="style"
+            app:argType="string" />
+    </fragment>
 </navigation>

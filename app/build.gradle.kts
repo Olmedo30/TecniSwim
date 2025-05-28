@@ -43,13 +43,12 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
     implementation ("androidx.navigation:navigation-fragment:2.7.5")
     implementation ("androidx.navigation:navigation-ui:2.7.5")
-
     implementation ("com.google.firebase:firebase-auth:22.1.1")
     implementation ("com.firebaseui:firebase-ui-auth:8.0.2")
-
+    implementation("com.google.code.gson:gson:2.10.1")
     implementation ("com.google.android.gms:play-services-auth:20.7.0")
-
     implementation ("com.github.bumptech.glide:glide:4.12.0")
+    implementation(libs.firebase.crashlytics.buildtools)
     annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
     testImplementation ("junit:junit:4.13.2")
     androidTestImplementation ("androidx.test.ext:junit:1.1.5")

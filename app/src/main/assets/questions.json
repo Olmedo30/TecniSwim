@@ -1,0 +1,46 @@
+{
+  "crol": [
+    {
+      "pregunta": "¿En qué posición debe entrar la mano al agua en crol?"
+    },
+    {
+      "pregunta": "¿Cuál es la alineación corporal ideal durante la brazada de crol?"
+    },
+    {
+      "pregunta": "¿Cómo coordinar la respiración con el movimiento de los hombros en crol?"
+    }
+  ],
+  "espalda": [
+    {
+      "pregunta": "¿Cómo se debe alinear la cabeza al nadar espalda?"
+    },
+    {
+      "pregunta": "¿Cuál es la posición óptima de las caderas en espalda para reducir la resistencia?"
+    },
+    {
+      "pregunta": "¿Cómo coordinar el movimiento de los brazos con la patada en espalda?"
+    }
+  ],
+  "braza": [
+    {
+      "pregunta": "¿Cuál es el movimiento correcto de la patada en braza?"
+    },
+    {
+      "pregunta": "¿Cómo mantener las rodillas separadas para una patada de braza eficiente?"
+    },
+    {
+      "pregunta": "¿Qué posición de brazos permite un impulso máximo en braza?"
+    }
+  ],
+  "mariposa": [
+    {
+      "pregunta": "¿Cuántos movimientos de delfín por brazada se recomiendan en mariposa?"
+    },
+    {
+      "pregunta": "¿Cómo sincronizar la patada de delfín con el movimiento de los brazos?"
+    },
+    {
+      "pregunta": "¿Cuál es la postura de cabeza ideal durante la brazada de mariposa?"
+    }
+  ]
+}
