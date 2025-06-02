@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:padding="24dp"
+    android:background="#090909"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!-- Foto de perfil editable -->
         <ImageView
             android:id="@+id/ivProfile"
             android:layout_width="100dp"
@@ -24,57 +24,55 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:padding="4dp"/>
 
-        <!-- Indicación para cambiar foto -->
         <TextView
             android:id="@+id/tvChangePhotoHint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Toca la foto para cambiarla"
             android:textSize="12sp"
+            android:textColor="#FFFFFF"
             android:layout_marginBottom="24dp"/>
 
-        <!-- Email (solo lectura) -->
         <TextView
             android:id="@+id/tvEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Email: "
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:textColor="#FFFFFF"/>
 
-        <!-- Nombre completo (solo lectura) -->
         <TextView
             android:id="@+id/tvDisplayName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Nombre completo: "
             android:textSize="16sp"
+            android:textColor="#FFFFFF"
             android:layout_marginTop="12dp"/>
 
-        <!-- Nombre (solo lectura) -->
         <TextView
             android:id="@+id/tvFirstName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Nombre: "
             android:textSize="16sp"
+            android:textColor="#FFFFFF"
             android:layout_marginTop="16dp"/>
 
-        <!-- Apellidos (solo lectura) -->
         <TextView
             android:id="@+id/tvLastName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Apellidos: "
             android:textSize="16sp"
+            android:textColor="#FFFFFF"
             android:layout_marginTop="12dp"/>
 
-        <!-- Botón guardar cambios -->
         <Button
             android:id="@+id/btnSave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Guardar cambios"
             android:layout_marginTop="24dp"/>
-
     </LinearLayout>
 </ScrollView>

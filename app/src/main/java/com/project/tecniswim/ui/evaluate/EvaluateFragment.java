@@ -1,8 +1,11 @@
 package com.project.tecniswim.ui.evaluate;
 
 import android.os.Bundle;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,29 +17,33 @@ import com.project.tecniswim.R;
 public class EvaluateFragment extends Fragment {
     private String selectedStyle = null;
 
-    @Nullable @Override
+    @Nullable
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_evaluate, container, false);
 
-        Button btnCrawl        = v.findViewById(R.id.btnCrawl);
-        Button btnBackstroke   = v.findViewById(R.id.btnBackstroke);
-        Button btnBreaststroke = v.findViewById(R.id.btnBreaststroke);
-        Button btnButterfly    = v.findViewById(R.id.btnButterfly);
-        Button btnContinue     = v.findViewById(R.id.btnContinue);
+        // Ahora usamos ImageButton para los estilos
+        ImageButton btnCrawl        = v.findViewById(R.id.btnCrawl);
+        ImageButton btnBackstroke   = v.findViewById(R.id.btnBackstroke);
+        ImageButton btnBreaststroke = v.findViewById(R.id.btnBreaststroke);
+        ImageButton btnButterfly    = v.findViewById(R.id.btnButterfly);
+
+        // El botón Continuar sigue siendo un Button normal
+        Button btnContinue          = v.findViewById(R.id.btnContinue);
 
         View.OnClickListener styleClick = view -> {
-            // Reactivar todos
+            // Reactivar todos los ImageButton
             btnCrawl.setEnabled(true);
             btnBackstroke.setEnabled(true);
             btnBreaststroke.setEnabled(true);
             btnButterfly.setEnabled(true);
 
-            // Desactivar el seleccionado
+            // Desactivar solo el ImageButton seleccionado
             view.setEnabled(false);
 
-            // Determinar estilo con if/else
+            // Determinar estilo según el ID del ImageButton
             int id = view.getId();
             if (id == R.id.btnCrawl) {
                 selectedStyle = "crol";
@@ -48,7 +55,7 @@ public class EvaluateFragment extends Fragment {
                 selectedStyle = "mariposa";
             }
 
-            // Mostrar botón continuar
+            // Mostrar el botón Continuar
             btnContinue.setVisibility(View.VISIBLE);
         };
 
@@ -58,10 +65,11 @@ public class EvaluateFragment extends Fragment {
         btnButterfly.setOnClickListener(styleClick);
 
         btnContinue.setOnClickListener(view -> {
-            // Construir manualmente el bundle
+            // Pasar el estilo seleccionado al siguiente destino
             Bundle args = new Bundle();
             args.putString("style", selectedStyle);
-            Navigation.findNavController(view).navigate(R.id.action_home_to_questions, args);
+            Navigation.findNavController(view)
+                    .navigate(R.id.action_home_to_questions, args);
         });
 
         return v;

@@ -2,46 +2,65 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:padding="24dp"
-    android:gravity="center_horizontal"
+    android:gravity="center"
+    android:background="#181818"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Nombre -->
+    <ImageView
+        android:id="@+id/ivLogo"
+        android:src="@drawable/logo"
+        android:contentDescription="@string/app_name"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="centerInside"
+        android:layout_marginBottom="12dp"/>
+
     <EditText
         android:id="@+id/etFirstName"
         android:hint="Nombre"
         android:inputType="textPersonName"
+        android:layout_marginTop="8dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#BBBBBB"
+        android:backgroundTint="#FFFFFF" />
 
-    <!-- Apellidos -->
     <EditText
         android:id="@+id/etLastName"
         android:hint="Apellidos"
         android:inputType="textPersonName"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#BBBBBB"
+        android:backgroundTint="#FFFFFF" />
 
-    <!-- Correo -->
     <EditText
         android:id="@+id/etEmail"
         android:hint="Correo"
         android:inputType="textEmailAddress"
         android:layout_marginTop="16dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#BBBBBB"
+        android:backgroundTint="#FFFFFF" />
 
-    <!-- Contraseña -->
     <EditText
         android:id="@+id/etPassword"
         android:hint="Contraseña (≥6)"
         android:inputType="textPassword"
         android:layout_marginTop="16dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#BBBBBB"
+        android:backgroundTint="#FFFFFF" />
 
-    <!-- Botón Registrar -->
     <Button
         android:id="@+id/btnRegister"
         android:text="Regístrate"
@@ -49,12 +68,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <!-- Enlace para volver al Login -->
     <TextView
         android:id="@+id/tvSwitchToLogin"
         android:text="¿Ya tienes cuenta? Inicia sesión"
-        android:layout_marginTop="24dp"
         android:textColor="?attr/colorPrimary"
+        android:layout_marginTop="24dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textStyle="bold" />
+
 </LinearLayout>

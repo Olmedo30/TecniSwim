@@ -1,38 +1,74 @@
-<?xml version="1.0" encoding="utf-8"?>
+<!-- fragment_evaluate.xml -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/homeRoot"
     android:orientation="vertical"
     android:padding="24dp"
+    android:gravity="center"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#090909">
 
-    <Button
-        android:id="@+id/btnCrawl"
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Crol"
-        android:layout_marginBottom="12dp"/>
+        android:layout_marginBottom="12dp">
 
-    <Button
-        android:id="@+id/btnBackstroke"
+        <ImageButton
+            android:id="@+id/btnCrawl"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/crol_button"
+            android:background="@null"
+            android:contentDescription="Crol"
+            android:layout_marginEnd="12dp"/>
+
+        <ImageButton
+            android:id="@+id/btnBackstroke"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/espalda_button"
+            android:background="@null"
+            android:contentDescription="Espalda"/>
+
+    </LinearLayout>
+
+    <!-- fila de abajo -->
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Espalda"
-        android:layout_marginBottom="12dp"/>
+        android:layout_marginBottom="24dp">
 
-    <Button
-        android:id="@+id/btnBreaststroke"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Braza"
-        android:layout_marginBottom="12dp"/>
+        <ImageButton
+            android:id="@+id/btnBreaststroke"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/braza_button"
+            android:background="@null"
+            android:contentDescription="Braza"
+            android:layout_marginEnd="12dp"/>
 
-    <Button
-        android:id="@+id/btnButterfly"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Mariposa"
-        android:layout_marginBottom="24dp"/>
+        <ImageButton
+            android:id="@+id/btnButterfly"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/mariposa_button"
+            android:background="@null"
+            android:contentDescription="Mariposa"/>
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/btnContinue"
@@ -40,4 +76,10 @@
         android:layout_height="wrap_content"
         android:text="Continuar"
         android:visibility="gone"/>
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
 </LinearLayout>
