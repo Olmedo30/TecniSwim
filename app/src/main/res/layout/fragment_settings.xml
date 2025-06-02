@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="24dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Foto de perfil editable -->
+        <ImageView
+            android:id="@+id/ivProfile"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@mipmap/ic_launcher_round"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="8dp"
+            android:contentDescription="Foto de perfil"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="4dp"/>
+
+        <!-- Indicación para cambiar foto -->
+        <TextView
+            android:id="@+id/tvChangePhotoHint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Toca la foto para cambiarla"
+            android:textSize="12sp"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- Email (solo lectura) -->
+        <TextView
+            android:id="@+id/tvEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Email: "
+            android:textSize="16sp"/>
+
+        <!-- Nombre completo (solo lectura) -->
+        <TextView
+            android:id="@+id/tvDisplayName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nombre completo: "
+            android:textSize="16sp"
+            android:layout_marginTop="12dp"/>
+
+        <!-- Nombre (solo lectura) -->
+        <TextView
+            android:id="@+id/tvFirstName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nombre: "
+            android:textSize="16sp"
+            android:layout_marginTop="16dp"/>
+
+        <!-- Apellidos (solo lectura) -->
+        <TextView
+            android:id="@+id/tvLastName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Apellidos: "
+            android:textSize="16sp"
+            android:layout_marginTop="12dp"/>
+
+        <!-- Botón guardar cambios -->
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Guardar cambios"
+            android:layout_marginTop="24dp"/>
+
+    </LinearLayout>
+</ScrollView>

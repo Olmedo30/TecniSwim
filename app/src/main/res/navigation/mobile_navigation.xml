@@ -5,41 +5,44 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@id/nav_home">
 
-    <!-- HomeFragment con la acción a QuestionsFragment -->
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.project.tecniswim.ui.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home">
+        android:name="com.project.tecniswim.ui.evaluate.EvaluateFragment"
+        android:label="Evaluar"
+        tools:layout="@layout/fragment_evaluate">
 
-        <!-- Acción hacia QuestionsFragment, sin Safe Args -->
         <action
             android:id="@+id/action_home_to_questions"
-            app:destination="@id/nav_questions" />
+            app:destination="@id/lateralFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.project.tecniswim.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:name="com.project.tecniswim.ui.exercises.ExercisesFragment"
+        android:label="Ejercicios"
+        tools:layout="@layout/fragment_exercises" />
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="com.project.tecniswim.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:name="com.project.tecniswim.ui.settings.SettingsFragment"
+        android:label="Ajustes"
+        tools:layout="@layout/fragment_settings" />
 
-    <!-- Nuevo fragmento de preguntas -->
     <fragment
-        android:id="@+id/nav_questions"
-        android:name="com.project.tecniswim.ui.home.QuestionsFragment"
-        android:label="Preguntas"
-        tools:layout="@layout/fragment_questions">
+        android:id="@+id/lateralFragment"
+        android:name="com.project.tecniswim.ui.evaluate.LateralFragment"
+        android:label="Visión Lateral"
+        tools:layout="@layout/fragment_questions_lateral">
 
-        <!-- Argumento que recibirá el estilo -->
-        <argument
-            android:name="style"
-            app:argType="string" />
+        <action
+            android:id="@+id/action_lateralFragment_to_frontalFragment"
+            app:destination="@id/frontalFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/frontalFragment"
+        android:name="com.project.tecniswim.ui.evaluate.FrontalFragment"
+        android:label="Visión Frontal"
+        tools:layout="@layout/fragment_questions_frontal" >
     </fragment>
 </navigation>

@@ -59,7 +59,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Header: imagen, correo y botón de logout
         View header = navView.getHeaderView(0);
-        ImageView ivProfile = header.findViewById(R.id.imageView);
+
+        //ImageView ivProfile = header.findViewById(R.id.imageView);
+
         TextView tvEmail   = header.findViewById(R.id.textView);
         Button btnLogout   = header.findViewById(R.id.btn_logout);
 
@@ -69,8 +71,7 @@ public class MainActivity extends AppCompatActivity {
             if (photoUrl != null) {
                 Glide.with(this)
                         .load(photoUrl)
-                        .circleCrop()
-                        .into(ivProfile);
+                        .circleCrop();
             }
             tvEmail.setText(user.getEmail());
         }

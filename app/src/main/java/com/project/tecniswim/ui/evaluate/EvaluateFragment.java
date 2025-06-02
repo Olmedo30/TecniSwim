@@ -1,4 +1,4 @@
-package com.project.tecniswim.ui.home;
+package com.project.tecniswim.ui.evaluate;
 
 import android.os.Bundle;
 import android.view.*;
@@ -11,14 +11,14 @@ import androidx.navigation.Navigation;
 
 import com.project.tecniswim.R;
 
-public class HomeFragment extends Fragment {
+public class EvaluateFragment extends Fragment {
     private String selectedStyle = null;
 
     @Nullable @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_home, container, false);
+        View v = inflater.inflate(R.layout.fragment_evaluate, container, false);
 
         Button btnCrawl        = v.findViewById(R.id.btnCrawl);
         Button btnBackstroke   = v.findViewById(R.id.btnBackstroke);
