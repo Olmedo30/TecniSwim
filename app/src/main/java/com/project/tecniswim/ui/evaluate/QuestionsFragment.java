@@ -1,6 +1,5 @@
 package com.project.tecniswim.ui.evaluate;
 
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -9,25 +8,21 @@ import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 import com.project.tecniswim.R;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 public class QuestionsFragment extends Fragment {
 
-    private LinearLayout container;  // Contenedor principal dentro del ScrollView
+    private LinearLayout container;  // “containerQuestions” dentro del ScrollView
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup containerParent,
                              Bundle savedInstanceState) {
-        // Inflamos el XML que contiene el ScrollView y el LinearLayout
         return inflater.inflate(R.layout.fragment_questions, containerParent, false);
     }
 
@@ -37,103 +32,110 @@ public class QuestionsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         container = view.findViewById(R.id.containerQuestions);
 
+        // 0) Leer “style” del Bundle
+        String style = "crol";
+        Bundle args = getArguments();
+        if (args != null && args.containsKey("style")) {
+            style = args.getString("style", "crol");
+        }
+
         try {
-            // 1) Leemos el JSON de CROL desde /assets/questions_crol.json
-            InputStream is = requireContext().getAssets().open("questions_crol.json");
+            // 1) Abrir siempre el mismo JSON: “questions.json”
+            InputStream is = requireContext().getAssets().open("questions.json");
             byte[] buffer = new byte[is.available()];
             is.read(buffer);
             is.close();
             String jsonText = new String(buffer, StandardCharsets.UTF_8);
-            JSONObject root = new JSONObject(jsonText);
+            JSONObject rootAll = new JSONObject(jsonText);
 
-            // 2) Mostramos el título principal ("CROL")
-            String estilo = root.optString("style", "CROL");
+            // 2) Extraer el objeto correspondiente al estilo: rootAll.getJSONObject(style)
+            //    Por ejemplo: “crol”, “espalda”, “braza” o “mariposa”
+            JSONObject root = rootAll.getJSONObject(style);
+
+            // 3) Mostrar título principal: usar el campo “style” dentro del JSON
+            String estiloJSON = root.optString("style", style.toUpperCase());
             TextView tvTitle = new TextView(requireContext());
-            tvTitle.setText(estilo);
+            tvTitle.setText(estiloJSON);
             tvTitle.setTextSize(24f);
             tvTitle.setTextColor(Color.BLACK);
             tvTitle.setPadding(0, 0, 0, dpToPx(16));
             container.addView(tvTitle);
 
-            // 3) Iteramos cada sección y la representamos en un TableLayout
+            // 4) Iterar secciones dentro de este objeto
             JSONArray sectionsArray = root.getJSONArray("sections");
             for (int s = 0; s < sectionsArray.length(); s++) {
                 JSONObject sectionObj = sectionsArray.getJSONObject(s);
                 String sectionName = sectionObj.optString("name", "");
 
-                // --- CREAMOS LA TABLA PARA ESTA SECCIÓN ---
+                // — Crear TableLayout para esta sección
                 TableLayout table = new TableLayout(requireContext());
                 table.setStretchAllColumns(true);
                 table.setShrinkAllColumns(true);
                 table.setPadding(0, dpToPx(8), 0, dpToPx(24));
 
-                // 3.a) Mostrar divisores horizontales
+                // 4.a) Divider horizontal
                 ColorDrawable dividerDrawable = new ColorDrawable(Color.parseColor("#90CAF9"));
                 table.setDividerDrawable(dividerDrawable);
                 table.setShowDividers(TableLayout.SHOW_DIVIDER_MIDDLE);
 
-                // 3.b) FILA: nombre de la sección (colspan = 2), fondo azul oscuro
+                // 4.b) Fila de encabezado de sección (colspan=2)
                 TableRow rowSection = new TableRow(requireContext());
-                rowSection.setBackgroundColor(Color.parseColor("#90CAF9")); // azul oscuro
+                rowSection.setBackgroundColor(Color.parseColor("#90CAF9"));
                 TextView tvSection = new TextView(requireContext());
                 tvSection.setText(sectionName);
                 tvSection.setTextSize(20f);
                 tvSection.setTextColor(Color.WHITE);
                 tvSection.setPadding(dpToPx(8), dpToPx(8), dpToPx(8), dpToPx(8));
-
                 TableRow.LayoutParams paramsSection = new TableRow.LayoutParams();
                 paramsSection.span = 2;
                 tvSection.setLayoutParams(paramsSection);
                 rowSection.addView(tvSection);
                 table.addView(rowSection);
 
-                // 3.c) Iteramos cada subsección
+                // 4.c) Iterar subsecciones
                 JSONArray subsectionsArr = sectionObj.getJSONArray("subsections");
                 for (int ss = 0; ss < subsectionsArr.length(); ss++) {
                     JSONObject subObj = subsectionsArr.getJSONObject(ss);
                     String subName = subObj.optString("name", "");
 
-                    // 3.c.1) FILA: nombre de la subsección (colspan = 2), fondo azul medio
+                    // 4.c.1) Fila de subtítulo de subsección (colspan=2)
                     TableRow rowSub = new TableRow(requireContext());
-                    rowSub.setBackgroundColor(Color.parseColor("#BBDEFB")); // azul medio
+                    rowSub.setBackgroundColor(Color.parseColor("#BBDEFB"));
                     TextView tvSub = new TextView(requireContext());
                     tvSub.setText(subName);
                     tvSub.setTextSize(18f);
                     tvSub.setTextColor(Color.DKGRAY);
                     tvSub.setPadding(dpToPx(12), dpToPx(8), dpToPx(12), dpToPx(6));
-
                     TableRow.LayoutParams paramsSub = new TableRow.LayoutParams();
                     paramsSub.span = 2;
                     tvSub.setLayoutParams(paramsSub);
                     rowSub.addView(tvSub);
                     table.addView(rowSub);
 
-                    // 3.c.2) Iteramos los criterios de esta subsección
+                    // 4.c.2) Iterar “criteria”
                     JSONArray criteriaArr = subObj.getJSONArray("criteria");
                     for (int c = 0; c < criteriaArr.length(); c++) {
                         String criterio = criteriaArr.getString(c);
 
-                        // 3.c.2.a) FILA #1: Texto del criterio (colspan = 2)
+                        // 4.c.2.a) Fila de texto de criterio
                         TableRow rowCritText = new TableRow(requireContext());
-                        // Alternamos color de fondo cada fila de texto de criterio
                         if (c % 2 == 0) {
-                            rowCritText.setBackgroundColor(Color.parseColor("#FFFFFF")); // blanco
+                            rowCritText.setBackgroundColor(Color.parseColor("#FFFFFF"));
                         } else {
-                            rowCritText.setBackgroundColor(Color.parseColor("#E3F2FD")); // azul suave
+                            rowCritText.setBackgroundColor(Color.parseColor("#E3F2FD"));
                         }
                         TextView tvCrit = new TextView(requireContext());
                         tvCrit.setText("• " + criterio);
                         tvCrit.setTextSize(16f);
                         tvCrit.setTextColor(Color.BLACK);
                         tvCrit.setPadding(dpToPx(8), dpToPx(4), dpToPx(8), dpToPx(4));
-
                         TableRow.LayoutParams critParams = new TableRow.LayoutParams();
                         critParams.span = 2;
                         tvCrit.setLayoutParams(critParams);
                         rowCritText.addView(tvCrit);
                         table.addView(rowCritText);
 
-                        // 3.c.2.b) FILA #2: RadioGroup (colspan = 2), fondo idéntico al anterior
+                        // 4.c.2.b) Fila de opciones (RadioGroup)
                         TableRow rowCritOpts = new TableRow(requireContext());
                         if (c % 2 == 0) {
                             rowCritOpts.setBackgroundColor(Color.parseColor("#FFFFFF"));
@@ -147,7 +149,9 @@ public class QuestionsFragment extends Fragment {
                         RadioButton rbApto = new RadioButton(requireContext());
                         rbApto.setText("Apto");
                         rbApto.setButtonTintList(
-                                ColorStateList.valueOf(Color.parseColor("#1976D2")) // azul oscuro
+                                android.content.res.ColorStateList.valueOf(
+                                        Color.parseColor("#1976D2")
+                                )
                         );
                         rbApto.setId(View.generateViewId());
                         rg.addView(rbApto);
@@ -155,7 +159,9 @@ public class QuestionsFragment extends Fragment {
                         RadioButton rbNoApto = new RadioButton(requireContext());
                         rbNoApto.setText("No apto");
                         rbNoApto.setButtonTintList(
-                                ColorStateList.valueOf(Color.parseColor("#D32F2F")) // se mantiene rojo para contraste
+                                android.content.res.ColorStateList.valueOf(
+                                        Color.parseColor("#D32F2F")
+                                )
                         );
                         rbNoApto.setId(View.generateViewId());
                         rg.addView(rbNoApto);
@@ -168,12 +174,11 @@ public class QuestionsFragment extends Fragment {
                     }
                 }
 
-                // 4) Añadimos la tabla completa al contenedor principal
+                // 5) Añadir la tabla al contenedor principal
                 container.addView(table);
             }
 
         } catch (Exception e) {
-            // Si hay error al cargar/parsing JSON
             TextView tvError = new TextView(requireContext());
             tvError.setText("Error cargando criterios: " + e.getMessage());
             tvError.setTextSize(16f);
@@ -183,7 +188,7 @@ public class QuestionsFragment extends Fragment {
         }
     }
 
-    /** Convierte DP a píxeles según densidad de pantalla */
+    /** Convierte DP a píxeles según densidad */
     private int dpToPx(int dp) {
         float density = requireContext().getResources().getDisplayMetrics().density;
         return Math.round(dp * density);

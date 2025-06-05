@@ -27,12 +27,12 @@ import org.json.JSONObject;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
-public class LateralFragment extends Fragment {
+public class IntermediateFragment extends Fragment {
 
     private QuestionsViewModel viewModel;
-    private LinearLayout container;   // Dentro del ScrollView en fragment_questions_lateral.xml
-    private Button btnContinuar;      // Botón “Continuar”
-    private int totalCriterios = 0;   // Número total de criterios en la sección “VISIÓN LATERAL”
+    private LinearLayout container;    // LinearLayout dentro de fragment_questions_lateral.xml
+    private Button btnContinuar;       // Botón “Continuar”
+    private int totalCriterios = 0;    // Cuenta total de criterios de “VISIÓN POSTERIOR”
 
     // Video-related fields:
     private VideoView videoView;
@@ -44,6 +44,7 @@ public class LateralFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup containerParent,
                              Bundle savedInstanceState) {
+        // Reutilizamos el mismo layout que LateralFragment (fragment_questions_lateral.xml)
         return inflater.inflate(R.layout.fragment_questions_lateral, containerParent, false);
     }
 
@@ -56,13 +57,11 @@ public class LateralFragment extends Fragment {
         videoView = view.findViewById(R.id.videoViewLateral);
         frameVideoContainer = view.findViewById(R.id.frameVideoContainer);
 
-        // 1) Let the MediaController overlay the VideoView
         videoView.setZOrderMediaOverlay(true);
         MediaController mediaController = new MediaController(requireContext());
         mediaController.setAnchorView(videoView);
         videoView.setMediaController(mediaController);
 
-        // 2) Register a launcher to pick “video/*” from gallery
         pickVideoLauncher = registerForActivityResult(
                 new ActivityResultContracts.GetContent(),
                 uri -> {
@@ -79,7 +78,6 @@ public class LateralFragment extends Fragment {
                 }
         );
 
-        // 3) “Seleccionar video” button in the XML
         Button btnPickVideo = view.findViewById(R.id.btnPickVideoLateral);
         btnPickVideo.setOnClickListener(v -> pickVideoLauncher.launch("video/*"));
         // ────────────────────────────────────────────────────────────────────────────────
@@ -87,36 +85,25 @@ public class LateralFragment extends Fragment {
         viewModel = new ViewModelProvider(requireActivity()).get(QuestionsViewModel.class);
         container = view.findViewById(R.id.containerLateral);
         btnContinuar = view.findViewById(R.id.btnContinuar);
-
-        // 1) Desactivar “Continuar” al inicio
         btnContinuar.setEnabled(false);
 
-        // 2) Mostrar dinámicamente la parte “VISIÓN LATERAL”
-        renderLateralSection();
+        renderPosteriorSection();
 
-        // 3) Al pulsar “Continuar”:
-        //    - si el estilo es “braza”, iremos a IntermediateFragment
-        //    - si no, iremos a FrontalFragment
-        btnContinuar.setOnClickListener(v -> {
-            String style = viewModel.getSelectedStyle();
-            if ("braza".equals(style)) {
+        // Al pulsar “Continuar” → FrontalFragment
+        btnContinuar.setOnClickListener(v ->
                 Navigation.findNavController(v)
-                        .navigate(R.id.action_lateral_to_intermediate);
-            } else {
-                Navigation.findNavController(v)
-                        .navigate(R.id.action_lateral_to_frontal);
-            }
-        });
+                        .navigate(R.id.action_intermediate_to_frontal)
+        );
     }
 
-    private void renderLateralSection() {
+    private void renderPosteriorSection() {
         try {
-            // 1) Leer el estilo actual
+            // 1) Leer el estilo (debe ser “braza” si llegamos aquí)
             String style = viewModel.getSelectedStyle();
-            if (style == null) style = "crol"; // Por defecto, en caso de error
+            if (style == null) style = "braza";
             String assetFileName = "questions_" + style + ".json";
 
-            // 2) Abrir ese JSON desde /assets
+            // 2) Abrir JSON
             InputStream is = requireContext().getAssets().open(assetFileName);
             byte[] buffer = new byte[is.available()];
             is.read(buffer);
@@ -124,16 +111,16 @@ public class LateralFragment extends Fragment {
             String jsonText = new String(buffer, StandardCharsets.UTF_8);
             JSONObject root = new JSONObject(jsonText);
 
-            // 3) Obtener la sección “VISIÓN LATERAL” dentro del array “sections”
+            // 3) Buscar la sección “VISIÓN POSTERIOR”
             if (!root.has("sections")) return;
             JSONArray sectionsArr = root.getJSONArray("sections");
 
-            // 4) Contar cuántos criterios hay en “VISIÓN LATERAL”
+            // 4) Contar cuántos criterios hay en “VISIÓN POSTERIOR”
             totalCriterios = 0;
             for (int s = 0; s < sectionsArr.length(); s++) {
                 JSONObject sectObj = sectionsArr.getJSONObject(s);
                 String sectionName = sectObj.optString("name", "");
-                if ("VISIÓN LATERAL".equalsIgnoreCase(sectionName)) {
+                if ("VISIÓN POSTERIOR".equalsIgnoreCase(sectionName)) {
                     JSONArray subsectionsArr = sectObj.getJSONArray("subsections");
                     for (int i = 0; i < subsectionsArr.length(); i++) {
                         JSONArray criteriaArr = subsectionsArr.getJSONObject(i).getJSONArray("criteria");
@@ -143,27 +130,27 @@ public class LateralFragment extends Fragment {
                 }
             }
 
-            // 5) Título principal (“VISIÓN LATERAL”)
+            // 5) Título principal “VISIÓN POSTERIOR”
             TextView tvSection = new TextView(requireContext());
-            tvSection.setText("VISIÓN LATERAL");
+            tvSection.setText("VISIÓN POSTERIOR");
             tvSection.setTextSize(22f);
             tvSection.setTextColor(Color.WHITE);
             tvSection.setBackgroundColor(0xFF1976D2);
             tvSection.setPadding(dpToPx(12), dpToPx(12), dpToPx(12), dpToPx(12));
             container.addView(tvSection);
 
-            // 6) Iterar para renderizar subsecciones y criterios
+            // 6) Iterar subsecciones y criterios
             for (int s = 0; s < sectionsArr.length(); s++) {
                 JSONObject sectObj = sectionsArr.getJSONObject(s);
                 String sectionName = sectObj.optString("name", "");
-                if ("VISIÓN LATERAL".equalsIgnoreCase(sectionName)) {
+                if ("VISIÓN POSTERIOR".equalsIgnoreCase(sectionName)) {
                     JSONArray subsectionsArr = sectObj.getJSONArray("subsections");
 
                     for (int i = 0; i < subsectionsArr.length(); i++) {
                         JSONObject subObj = subsectionsArr.getJSONObject(i);
                         String subName = subObj.optString("name", "");
 
-                        // 6.a) Subtítulo de la subsección
+                        // 6.a) Subtítulo de subsección
                         TextView tvSub = new TextView(requireContext());
                         tvSub.setText(subName);
                         tvSub.setTextSize(18f);
@@ -175,9 +162,8 @@ public class LateralFragment extends Fragment {
                         JSONArray criteriaArr = subObj.getJSONArray("criteria");
                         for (int c = 0; c < criteriaArr.length(); c++) {
                             String criterio = criteriaArr.getString(c);
-                            String clave = "LATERAL|" + criterio;
+                            String clave = "POSTERIOR|" + criterio;
 
-                            // Crear CardView por cada criterio
                             CardView card = new CardView(requireContext());
                             LinearLayout.LayoutParams cardParams =
                                     new LinearLayout.LayoutParams(
@@ -190,20 +176,17 @@ public class LateralFragment extends Fragment {
                             card.setCardElevation(dpToPx(4));
                             card.setUseCompatPadding(true);
 
-                            // Contenedor interno vertical para texto + RadioGroup
                             LinearLayout inner = new LinearLayout(requireContext());
                             inner.setOrientation(LinearLayout.VERTICAL);
                             inner.setPadding(dpToPx(12), dpToPx(12), dpToPx(12), dpToPx(12));
                             card.addView(inner);
 
-                            // Texto del criterio
                             TextView tvCrit = new TextView(requireContext());
                             tvCrit.setText(criterio);
                             tvCrit.setTextSize(16f);
                             tvCrit.setTextColor(Color.BLACK);
                             inner.addView(tvCrit);
 
-                            // RadioGroup horizontal (Apto / No apto)
                             RadioGroup rg = new RadioGroup(requireContext());
                             rg.setOrientation(RadioGroup.HORIZONTAL);
                             rg.setPadding(0, dpToPx(8), 0, dpToPx(8));
@@ -224,19 +207,19 @@ public class LateralFragment extends Fragment {
                             rbNoApto.setId(View.generateViewId());
                             rg.addView(rbNoApto);
 
-                            // Restaurar selección previa (si existe)
+                            // Restaurar selección previa
                             if (viewModel.tieneRespuesta(clave)) {
                                 boolean fueApto = viewModel.getRespuesta(clave);
                                 if (fueApto) rbApto.setChecked(true);
                                 else rbNoApto.setChecked(true);
                             }
 
-                            // Listener para guardar la respuesta y verificar si todas contestadas
+                            // Listener
                             rg.setOnCheckedChangeListener((group, checkedId) -> {
                                 boolean esApto = (checkedId == rbApto.getId());
                                 viewModel.setRespuesta(clave, esApto);
 
-                                int contestadas = viewModel.getNumContestadosEnSeccion("LATERAL");
+                                int contestadas = viewModel.getNumContestadosEnSeccion("POSTERIOR");
                                 if (contestadas >= totalCriterios) {
                                     btnContinuar.setEnabled(true);
                                 }
@@ -250,16 +233,15 @@ public class LateralFragment extends Fragment {
                 }
             }
 
-            // 7) Si en el ViewModel ya había respuestas previas, habilitar “Continuar” si están todas
-            int inicialContestadas = viewModel.getNumContestadosEnSeccion("LATERAL");
+            // 7) Habilitar “Continuar” si ya estaban todas contestadas
+            int inicialContestadas = viewModel.getNumContestadosEnSeccion("POSTERIOR");
             if (inicialContestadas >= totalCriterios) {
                 btnContinuar.setEnabled(true);
             }
 
         } catch (Exception e) {
-            // Mostrar mensaje de error en caso de fallo al parsear JSON
             TextView tvError = new TextView(requireContext());
-            tvError.setText("Error cargando sección LATERAL:\n" + e.getMessage());
+            tvError.setText("Error cargando sección POSTERIOR:\n" + e.getMessage());
             tvError.setTextColor(0xFFFF0000);
             tvError.setPadding(dpToPx(8), dpToPx(8), dpToPx(8), dpToPx(8));
             container.addView(tvError);

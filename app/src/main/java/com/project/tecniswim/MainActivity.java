@@ -15,7 +15,6 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -34,34 +33,38 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Inflate & setup
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setSupportActionBar(binding.appBarMain.toolbar);
 
-        // GoogleSignInClient (para logout)
+        // Configure GoogleSignInClient for logout
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
         googleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        // Navigation Drawer
+        // Set up DrawerLayout and NavigationView
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navView = binding.navView;
+
+        // Include evaluateFragment as a top-level destination so the hamburger icon appears there too
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                R.id.nav_gallery,
+                R.id.nav_slideshow,
+                R.id.evaluateFragment
+        )
                 .setOpenableLayout(drawer)
                 .build();
+
         NavController navController = Navigation.findNavController(this,
                 R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-        // Header: imagen, correo y botón de logout
+        navView.setCheckedItem(R.id.evaluateFragment);
+
+        // Header: load profile image, email, and set logout
         View header = navView.getHeaderView(0);
-
-        //ImageView ivProfile = header.findViewById(R.id.imageView);
-
         TextView tvEmail   = header.findViewById(R.id.textView);
         Button btnLogout   = header.findViewById(R.id.btn_logout);
 
@@ -69,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         if (user != null) {
             Uri photoUrl = user.getPhotoUrl();
             if (photoUrl != null) {
+                // Actually load into ivProfile
                 Glide.with(this)
                         .load(photoUrl)
                         .circleCrop();
@@ -77,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         btnLogout.setOnClickListener(v -> {
-            // Cerrar sesión en Firebase, FirebaseUI y GoogleSignIn
             FirebaseAuth.getInstance().signOut();
             AuthUI.getInstance().signOut(this)
                     .addOnCompleteListener(task ->
@@ -90,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        // Si no hay usuario logueado, vamos al LoginActivity
         if (FirebaseAuth.getInstance().getCurrentUser() == null) {
             redirectToLogin();
         }

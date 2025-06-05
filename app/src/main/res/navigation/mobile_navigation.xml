@@ -1,48 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mobile_navigation"
-    app:startDestination="@id/nav_home">
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/evaluateFragment">
 
+    <!-- 1. EvaluateFragment (Seleccionar Estilo) -->
     <fragment
-        android:id="@+id/nav_home"
+        android:id="@+id/evaluateFragment"
         android:name="com.project.tecniswim.ui.evaluate.EvaluateFragment"
-        android:label="Evaluar"
-        tools:layout="@layout/fragment_evaluate">
+        android:label="Seleccionar Estilo">
 
+        <!-- Este fragmento declara que recibirá o enviará un argumento "style" -->
+        <argument
+            android:name="style"
+            app:argType="string"
+            android:defaultValue="" />
+
+        <!-- Única acción: siempre ir a LateralFragment, pasando "style" -->
         <action
-            android:id="@+id/action_home_to_questions"
-            app:destination="@id/lateralFragment" />
+            android:id="@+id/action_evaluate_to_lateral"
+            app:destination="@id/lateralFragment">
+            <argument
+                android:name="style"
+                app:argType="string"/>
+        </action>
     </fragment>
 
-    <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.project.tecniswim.ui.exercises.ExercisesFragment"
-        android:label="Ejercicios"
-        tools:layout="@layout/fragment_exercises" />
-
-    <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.project.tecniswim.ui.settings.SettingsFragment"
-        android:label="Ajustes"
-        tools:layout="@layout/fragment_settings" />
-
+    <!-- 2. LateralFragment (Visión Lateral) -->
     <fragment
         android:id="@+id/lateralFragment"
         android:name="com.project.tecniswim.ui.evaluate.LateralFragment"
-        android:label="Visión Lateral"
-        tools:layout="@layout/fragment_questions_lateral">
+        android:label="Visión Lateral">
 
+        <!-- LateralFragment recibe el argumento "style" -->
+        <argument
+            android:name="style"
+            app:argType="string" />
+
+        <!-- Si style != "braza", ir directo a FrontalFragment -->
         <action
-            android:id="@+id/action_lateralFragment_to_frontalFragment"
-            app:destination="@id/frontalFragment" />
+            android:id="@+id/action_lateral_to_frontal"
+            app:destination="@id/frontalFragment">
+            <argument
+                android:name="style"
+                app:argType="string" />
+        </action>
+
+        <!-- Si style == "braza", primero ir a IntermediateFragment -->
+        <action
+            android:id="@+id/action_lateral_to_intermediate"
+            app:destination="@id/intermediateFragment">
+            <argument
+                android:name="style"
+                app:argType="string" />
+        </action>
+
+        <!-- Acción para volver a EvaluateFragment (limpiando el back stack) -->
+        <action
+            android:id="@+id/action_lateral_to_evaluate"
+            app:destination="@id/evaluateFragment"
+            app:popUpTo="@id/evaluateFragment"
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right" />
     </fragment>
 
+    <!-- 3. IntermediateFragment (Visión Posterior, solo para “braza”) -->
+    <fragment
+        android:id="@+id/intermediateFragment"
+        android:name="com.project.tecniswim.ui.evaluate.IntermediateFragment"
+        android:label="Visión Posterior (Braza)">
+
+        <!-- Recibe el mismo argumento "style" (que será “braza”) -->
+        <argument
+            android:name="style"
+            app:argType="string" />
+
+        <!-- Desde aquí, ir a FrontalFragment pasando style -->
+        <action
+            android:id="@+id/action_intermediate_to_frontal"
+            app:destination="@id/frontalFragment">
+            <argument
+                android:name="style"
+                app:argType="string" />
+        </action>
+    </fragment>
+
+    <!-- 4. FrontalFragment (Visión Frontal) -->
     <fragment
         android:id="@+id/frontalFragment"
         android:name="com.project.tecniswim.ui.evaluate.FrontalFragment"
-        android:label="Visión Frontal"
-        tools:layout="@layout/fragment_questions_frontal" >
+        android:label="Visión Frontal">
+
+        <!-- Recibe el argumento "style" para saber qué JSON cargar -->
+        <argument
+            android:name="style"
+            app:argType="string" />
+
+        <!-- Ejemplo: acción a UsersFragment si quisieras -->
+        <action
+            android:id="@+id/action_frontal_to_users"
+            app:destination="@id/usersFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
     </fragment>
+
+    <!-- 5. UsersFragment (Buscar Usuarios) -->
+    <fragment
+        android:id="@+id/usersFragment"
+        android:name="com.project.tecniswim.ui.evaluate.UsersFragment"
+        android:label="Buscar Usuarios" />
+
+    <!-- 6. EjerciciosFragment -->
+    <fragment
+        android:id="@+id/nav_gallery"
+        android:name="com.project.tecniswim.ui.exercises.ExercisesFragment"
+        android:label="Ejercicios" />
+
+    <!-- 7. SettingsFragment -->
+    <fragment
+        android:id="@+id/nav_slideshow"
+        android:name="com.project.tecniswim.ui.settings.SettingsFragment"
+        android:label="Ajustes" />
+
 </navigation>

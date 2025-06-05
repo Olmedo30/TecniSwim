@@ -1,0 +1,76 @@
+{
+  "style": "BRAZA",
+  "sections": [
+    {
+      "name": "VISIÓN LATERAL",
+      "subsections": [
+        {
+          "name": "POSICIÓN del CUERPO",
+          "criteria": [
+            "Rompe la superficie del agua con la cabeza",
+            "En la posición de máxima flexión, la cabeza y los hombros están fuera del agua y los brazos flexionados debajo del pecho",
+            "En la posición de máxima extensión (deslizamiento), los brazos están estirados y la cabeza entre los brazos"
+          ]
+        },
+        {
+          "name": "ACCIÓN de los BRAZOS",
+          "criteria": [
+            "Movimiento simultáneo y simétrico de los brazos",
+            "Los codos no sobrepasan el nivel de los hombros (no se llevan hacia atrás)"
+          ]
+        },
+        {
+          "name": "COORDINACIÓN",
+          "criteria": [
+            "La coordinación se realiza en el siguiente ORDEN: brazada  respiración  patada  deslizamiento",
+            "La cabeza se introduce en el agua coincidiendo con la extensión de los brazos hacia delante",
+            "Completa extensión del cuerpo al finalizar la patada"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "VISIÓN POSTERIOR",
+      "subsections": [
+        {
+          "name": "POSICIÓN del CUERPO",
+          "criteria": [
+            "Rompe la superficie del agua con la cabeza"
+          ]
+        },
+        {
+          "name": "ACCIÓN de las PIERNAS",
+          "criteria": [
+            "Movimiento simultáneo y simétrico de las piernas",
+            "Las piernas realizan un movimiento circular",
+            "Durante la patada, los tobillos van flexionados y los pies girados hacia fuera (rotación externa)",
+            "Los pies están más separados que las rodillas formando una “W” entre caderas, rodillas y pies",
+            "Extensión completa de piernas al finalizar la patada"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "VISIÓN FRONTAL",
+      "subsections": [
+        {
+          "name": "POSICIÓN del CUERPO",
+          "criteria": [
+            "Rompe la superficie del agua con la cabeza"
+          ]
+        },
+        {
+          "name": "ACCIÓN de los BRAZOS",
+          "criteria": [
+            "Movimiento simultáneo y simétrico de los brazos",
+            "Las manos se separan algo más de la anchura de los hombros al iniciar la brazada",
+            "Las manos realizan un movimiento circular y se juntan debajo de la cara (a la altura del pecho)",
+            "Los codos no sobrepasan el nivel de los hombros (no se llevan hacia atrás)",
+            "Aceleración de los brazos durante la brazada",
+            "Al finalizar la tracción, las manos se lanzan hacia delante y se produce una extensión completa de los brazos"
+          ]
+        }
+      ]
+    }
+  ]
+}
