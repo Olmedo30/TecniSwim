@@ -7,8 +7,10 @@ import java.util.Map;
 
 public class QuestionsViewModel extends ViewModel {
     private String selectedStyle = null;
-    // Clave: "<SECCION>|<criterio>", Valor: true = “Sí” / false = “No”
     private final Map<String, Boolean> respuestas = new HashMap<>();
+    private String tecnicoNombre;
+    public void setTecnicoNombre(String nombre) { tecnicoNombre = nombre; }
+    public String getTecnicoNombre() { return tecnicoNombre; }
 
     public void setSelectedStyle(String style) {
         this.selectedStyle = style;

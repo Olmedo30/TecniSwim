@@ -52,7 +52,6 @@ public class LateralFragment extends Fragment {
                               @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // ─── VIDEO SETUP ────────────────────────────────────────────────────────────────
         videoView = view.findViewById(R.id.videoViewLateral);
         frameVideoContainer = view.findViewById(R.id.frameVideoContainer);
 
@@ -82,21 +81,15 @@ public class LateralFragment extends Fragment {
         // 3) “Seleccionar video” button in the XML
         Button btnPickVideo = view.findViewById(R.id.btnPickVideoLateral);
         btnPickVideo.setOnClickListener(v -> pickVideoLauncher.launch("video/*"));
-        // ────────────────────────────────────────────────────────────────────────────────
 
         viewModel = new ViewModelProvider(requireActivity()).get(QuestionsViewModel.class);
         container = view.findViewById(R.id.containerLateral);
         btnContinuar = view.findViewById(R.id.btnContinuar);
 
-        // 1) Desactivar “Continuar” al inicio
         btnContinuar.setEnabled(false);
 
-        // 2) Mostrar dinámicamente la parte “VISIÓN LATERAL”
         renderLateralSection();
 
-        // 3) Al pulsar “Continuar”:
-        //    - si el estilo es “braza”, iremos a IntermediateFragment
-        //    - si no, iremos a FrontalFragment
         btnContinuar.setOnClickListener(v -> {
             String style = viewModel.getSelectedStyle();
             if ("braza".equals(style)) {
@@ -166,8 +159,8 @@ public class LateralFragment extends Fragment {
                         // 6.a) Subtítulo de la subsección
                         TextView tvSub = new TextView(requireContext());
                         tvSub.setText(subName);
-                        tvSub.setTextSize(18f);
-                        tvSub.setTextColor(0xFF0D47A1);
+                        tvSub.setTextSize(20f);
+                        tvSub.setTextColor(0xFF0D47C4);
                         tvSub.setPadding(dpToPx(12), dpToPx(16), dpToPx(12), dpToPx(4));
                         container.addView(tvSub);
 
@@ -179,6 +172,8 @@ public class LateralFragment extends Fragment {
 
                             // Crear CardView por cada criterio
                             CardView card = new CardView(requireContext());
+                            card.setCardBackgroundColor(0xFF090909);
+
                             LinearLayout.LayoutParams cardParams =
                                     new LinearLayout.LayoutParams(
                                             ViewGroup.LayoutParams.MATCH_PARENT,
@@ -190,50 +185,49 @@ public class LateralFragment extends Fragment {
                             card.setCardElevation(dpToPx(4));
                             card.setUseCompatPadding(true);
 
-                            // Contenedor interno vertical para texto + RadioGroup
                             LinearLayout inner = new LinearLayout(requireContext());
                             inner.setOrientation(LinearLayout.VERTICAL);
                             inner.setPadding(dpToPx(12), dpToPx(12), dpToPx(12), dpToPx(12));
                             card.addView(inner);
 
-                            // Texto del criterio
                             TextView tvCrit = new TextView(requireContext());
                             tvCrit.setText(criterio);
                             tvCrit.setTextSize(16f);
-                            tvCrit.setTextColor(Color.BLACK);
+                            tvCrit.setTextColor(Color.WHITE);
                             inner.addView(tvCrit);
 
-                            // RadioGroup horizontal (Apto / No apto)
                             RadioGroup rg = new RadioGroup(requireContext());
                             rg.setOrientation(RadioGroup.HORIZONTAL);
                             rg.setPadding(0, dpToPx(8), 0, dpToPx(8));
 
-                            RadioButton rbApto = new RadioButton(requireContext());
-                            rbApto.setText("Apto");
-                            rbApto.setButtonTintList(
+                            RadioButton rbSi = new RadioButton(requireContext());
+                            rbSi.setText("Sí");
+                            rbSi.setTextColor(Color.WHITE);
+                            rbSi.setButtonTintList(
                                     android.content.res.ColorStateList.valueOf(0xFF1976D2)
                             );
-                            rbApto.setId(View.generateViewId());
-                            rg.addView(rbApto);
+                            rbSi.setId(View.generateViewId());
+                            rg.addView(rbSi);
 
-                            RadioButton rbNoApto = new RadioButton(requireContext());
-                            rbNoApto.setText("No apto");
-                            rbNoApto.setButtonTintList(
+                            RadioButton rbNo = new RadioButton(requireContext());
+                            rbNo.setText("No");
+                            rbNo.setTextColor(Color.WHITE);
+                            rbNo.setButtonTintList(
                                     android.content.res.ColorStateList.valueOf(0xFFD32F2F)
                             );
-                            rbNoApto.setId(View.generateViewId());
-                            rg.addView(rbNoApto);
+                            rbNo.setId(View.generateViewId());
+                            rg.addView(rbNo);
 
                             // Restaurar selección previa (si existe)
                             if (viewModel.tieneRespuesta(clave)) {
                                 boolean fueApto = viewModel.getRespuesta(clave);
-                                if (fueApto) rbApto.setChecked(true);
-                                else rbNoApto.setChecked(true);
+                                if (fueApto) rbSi.setChecked(true);
+                                else rbNo.setChecked(true);
                             }
 
                             // Listener para guardar la respuesta y verificar si todas contestadas
                             rg.setOnCheckedChangeListener((group, checkedId) -> {
-                                boolean esApto = (checkedId == rbApto.getId());
+                                boolean esApto = (checkedId == rbSi.getId());
                                 viewModel.setRespuesta(clave, esApto);
 
                                 int contestadas = viewModel.getNumContestadosEnSeccion("LATERAL");

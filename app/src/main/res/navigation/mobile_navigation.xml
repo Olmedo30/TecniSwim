@@ -70,7 +70,7 @@
     <fragment
         android:id="@+id/intermediateFragment"
         android:name="com.project.tecniswim.ui.evaluate.IntermediateFragment"
-        android:label="Visión Posterior (Braza)">
+        android:label="Visión Posterior">
 
         <!-- Recibe el mismo argumento "style" (que será “braza”) -->
         <argument

@@ -3,9 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#333333">
 
-    <!-- 1) Botón para elegir vídeo desde galería -->
     <Button
         android:id="@+id/btnPickVideoFrontal"
         android:layout_width="0dp"
@@ -33,7 +33,6 @@
             android:layout_height="match_parent" />
     </FrameLayout>
 
-    <!-- 3) ScrollView con los criterios, debajo del vídeo -->
     <ScrollView
         android:id="@+id/scrollFrontal"
         android:layout_width="0dp"
@@ -52,7 +51,6 @@
             android:layout_height="wrap_content"/>
     </ScrollView>
 
-    <!-- 4) Botón “Finalizar y enviar” en la parte inferior -->
     <Button
         android:id="@+id/btnFinalizar"
         android:layout_width="0dp"

@@ -1,4 +1,3 @@
-<!-- fragment_evaluate.xml -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:padding="24dp"
@@ -7,6 +6,16 @@
     android:layout_height="match_parent"
     android:background="#090909">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Bienvenido/a a TecniSwim, la app que te permitirá analizar la técnica de los cuatro estilos de natación, detectando los principales errores y proponiendo ejercicios para su corrección."
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:lineSpacingExtra="6dp"
+        android:layout_marginBottom="24dp"
+        android:gravity="center"
+        android:textStyle="bold"/>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"

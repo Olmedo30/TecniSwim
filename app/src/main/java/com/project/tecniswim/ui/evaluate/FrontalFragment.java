@@ -54,7 +54,6 @@ public class FrontalFragment extends Fragment {
                               @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // ─── VIDEO SETUP ────────────────────────────────────────────────────────────────
         videoView = view.findViewById(R.id.videoViewFrontal);
         frameVideoContainer = view.findViewById(R.id.frameVideoContainerFrontal);
 
@@ -81,7 +80,6 @@ public class FrontalFragment extends Fragment {
 
         Button btnPickVideo = view.findViewById(R.id.btnPickVideoFrontal);
         btnPickVideo.setOnClickListener(v -> pickVideoLauncher.launch("video/*"));
-        // ────────────────────────────────────────────────────────────────────────────────
 
         viewModel = new ViewModelProvider(requireActivity()).get(QuestionsViewModel.class);
         container = view.findViewById(R.id.containerFrontal);
@@ -95,7 +93,6 @@ public class FrontalFragment extends Fragment {
 
         // 3) Al pulsar “Finalizar y enviar” → UsersFragment
         btnFinalizar.setOnClickListener(v -> {
-            // (Opcional) Toast con todas las respuestas
             StringBuilder sb = new StringBuilder();
             for (Map.Entry<String, Boolean> entry : viewModel.getTodasRespuestas().entrySet()) {
                 sb.append(entry.getKey())
@@ -103,7 +100,6 @@ public class FrontalFragment extends Fragment {
                         .append(entry.getValue() ? "Sí" : "No")
                         .append("\n");
             }
-            Toast.makeText(requireContext(), sb.toString(), Toast.LENGTH_LONG).show();
 
             // Navegar a UsersFragment
             Navigation.findNavController(v)
@@ -168,8 +164,8 @@ public class FrontalFragment extends Fragment {
                         // 6.a) Subtítulo de subsección
                         TextView tvSub = new TextView(requireContext());
                         tvSub.setText(subName);
-                        tvSub.setTextSize(18f);
-                        tvSub.setTextColor(0xFF0D47A1);
+                        tvSub.setTextSize(20f);
+                        tvSub.setTextColor(0xFF0D47C4);
                         tvSub.setPadding(dpToPx(12), dpToPx(16), dpToPx(12), dpToPx(4));
                         container.addView(tvSub);
 
@@ -180,6 +176,7 @@ public class FrontalFragment extends Fragment {
                             String clave = "FRONTAL|" + criterio;
 
                             CardView card = new CardView(requireContext());
+                            card.setCardBackgroundColor(0xFF090909);
                             LinearLayout.LayoutParams cardParams =
                                     new LinearLayout.LayoutParams(
                                             ViewGroup.LayoutParams.MATCH_PARENT,
@@ -199,7 +196,7 @@ public class FrontalFragment extends Fragment {
                             TextView tvCrit = new TextView(requireContext());
                             tvCrit.setText(criterio);
                             tvCrit.setTextSize(16f);
-                            tvCrit.setTextColor(Color.BLACK);
+                            tvCrit.setTextColor(Color.WHITE);
                             inner.addView(tvCrit);
 
                             RadioGroup rg = new RadioGroup(requireContext());
@@ -208,6 +205,7 @@ public class FrontalFragment extends Fragment {
 
                             RadioButton rbSi = new RadioButton(requireContext());
                             rbSi.setText("Sí");
+                            rbSi.setTextColor(Color.WHITE);
                             rbSi.setButtonTintList(
                                     android.content.res.ColorStateList.valueOf(0xFF1976D2)
                             );
@@ -216,6 +214,7 @@ public class FrontalFragment extends Fragment {
 
                             RadioButton rbNo = new RadioButton(requireContext());
                             rbNo.setText("No");
+                            rbNo.setTextColor(Color.WHITE);
                             rbNo.setButtonTintList(
                                     android.content.res.ColorStateList.valueOf(0xFFD32F2F)
                             );

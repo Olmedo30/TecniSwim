@@ -3,14 +3,17 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#090909">
 
     <EditText
         android:id="@+id/etSearchUsers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Buscar usuarios…"
+        android:textColorHint="@color/light_grey"
         android:inputType="text"
+        android:textColor="@android:color/white"
         android:drawablePadding="8dp"
         android:drawableStart="@android:drawable/ic_menu_search"/>
 

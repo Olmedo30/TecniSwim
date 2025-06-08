@@ -16,7 +16,7 @@ import java.nio.charset.StandardCharsets;
 
 public class QuestionsFragment extends Fragment {
 
-    private LinearLayout container;  // “containerQuestions” dentro del ScrollView
+    private LinearLayout container;
 
     @Nullable
     @Override
