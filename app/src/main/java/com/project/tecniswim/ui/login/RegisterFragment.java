@@ -34,7 +34,6 @@ public class RegisterFragment extends Fragment {
         auth = FirebaseAuth.getInstance();
         db   = FirebaseFirestore.getInstance();
 
-        // Enlazamos solo los campos que quedan: nombre, apellidos, email y contraseña
         etFirstName     = view.findViewById(R.id.etFirstName);
         etLastName      = view.findViewById(R.id.etLastName);
         etEmail         = view.findViewById(R.id.etEmail);
@@ -56,7 +55,6 @@ public class RegisterFragment extends Fragment {
         String email     = etEmail.getText().toString().trim();
         String pass      = etPassword.getText().toString().trim();
 
-        // Validaciones básicas
         if (TextUtils.isEmpty(firstName)) {
             etFirstName.setError("Introduce tu nombre");
             return;
@@ -74,7 +72,6 @@ public class RegisterFragment extends Fragment {
             return;
         }
 
-        // Creamos el usuario con correo/contraseña
         auth.createUserWithEmailAndPassword(email, pass)
                 .addOnCompleteListener(requireActivity(), task -> {
                     if (!task.isSuccessful()) {
@@ -88,7 +85,6 @@ public class RegisterFragment extends Fragment {
                     FirebaseUser fbUser = auth.getCurrentUser();
                     if (fbUser == null) return;
 
-                    // 1) Enviar correo de verificación
                     fbUser.sendEmailVerification()
                             .addOnSuccessListener(v ->
                                     Toast.makeText(getContext(),
@@ -101,11 +97,10 @@ public class RegisterFragment extends Fragment {
                                             Toast.LENGTH_LONG).show()
                             );
 
-                    // 2) Guardar datos en Firestore (sin navegar aún)
                     Map<String,Object> datos = new HashMap<>();
                     datos.put("uid",          fbUser.getUid());
                     datos.put("email",        email);
-                    datos.put("displayName",  "");   // se completará en configuración de perfil
+                    datos.put("displayName",  "");
                     datos.put("photoUrl",     null);
                     datos.put("firstName",    firstName);
                     datos.put("lastName",     lastName);
@@ -118,8 +113,6 @@ public class RegisterFragment extends Fragment {
                                             "Error guardando datos: " + e.getMessage(),
                                             Toast.LENGTH_LONG).show()
                             );
-
-                    // No navegamos a MainActivity: esperamos a que el usuario verifique su correo
                 });
     }
 }

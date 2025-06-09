@@ -14,17 +14,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-
 import com.bumptech.glide.Glide;
 import com.project.tecniswim.R;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -44,7 +40,6 @@ public class ExercisesFragment extends Fragment {
         spinnerStyles      = root.findViewById(R.id.spinnerStyles);
         containerExercises = root.findViewById(R.id.containerExercises);
 
-        // 0) Leer JSON y extraer el array "styles"
         try {
             InputStream is = requireContext().getAssets().open("ejercicios.json");
             byte[] buf = new byte[is.available()];
@@ -56,9 +51,8 @@ public class ExercisesFragment extends Fragment {
             stylesArray = new JSONArray();
         }
 
-        // 1) Rellenar Spinner dinámicamente con "Todos" + nombres de estilo
         List<String> estilos = new ArrayList<>();
-        estilos.add("TODOS"); // opción para ver todos los vídeos
+        estilos.add("TODOS");
         for (int i = 0; i < stylesArray.length(); i++) {
             estilos.add(stylesArray.optJSONObject(i).optString("style", "ESTILO_" + i));
         }
@@ -91,7 +85,6 @@ public class ExercisesFragment extends Fragment {
         spinnerStyles.setBackgroundResource(R.drawable.spinner_bg);
         spinnerStyles.setPadding(dpToPx(8), dpToPx(4), dpToPx(8), dpToPx(4));
 
-        // margen inferior de 4dp
         MarginLayoutParams mlp = (MarginLayoutParams) spinnerStyles.getLayoutParams();
         mlp.bottomMargin = dpToPx(4);
         spinnerStyles.setLayoutParams(mlp);
@@ -112,7 +105,6 @@ public class ExercisesFragment extends Fragment {
         containerExercises.removeAllViews();
 
         if ("TODOS".equalsIgnoreCase(styleKey)) {
-            // Mostrar todos los vídeos de todos los estilos
             for (int i = 0; i < stylesArray.length(); i++) {
                 JSONObject styleObj = stylesArray.optJSONObject(i);
                 String sectStyle = styleObj.optString("style", "");
@@ -121,8 +113,6 @@ public class ExercisesFragment extends Fragment {
                     for (int j = 0; j < sections.length(); j++) {
                         JSONObject sect = sections.optJSONObject(j);
                         String sectName = sect.optString("name", sectStyle + " Sección " + (j+1));
-
-                        // cabecera sección
                         TextView tvSect = new TextView(requireContext());
                         tvSect.setText(sectStyle + " - " + sectName);
                         tvSect.setTextSize(22f);
@@ -130,8 +120,6 @@ public class ExercisesFragment extends Fragment {
                         tvSect.setBackgroundColor(0xFF1976D2);
                         tvSect.setPadding(dpToPx(12), dpToPx(12), dpToPx(12), dpToPx(12));
                         containerExercises.addView(tvSect);
-
-                        // vídeos
                         JSONArray links = sect.optJSONArray("exercise_links");
                         if (links != null) {
                             for (int k = 0; k < links.length(); k++) {
@@ -144,7 +132,6 @@ public class ExercisesFragment extends Fragment {
             return;
         }
 
-        // buscar solo el estilo concreto
         JSONObject styleObj = null;
         for (int i = 0; i < stylesArray.length(); i++) {
             JSONObject obj = stylesArray.optJSONObject(i);

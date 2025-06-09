@@ -30,11 +30,10 @@ import java.nio.charset.StandardCharsets;
 public class LateralFragment extends Fragment {
 
     private QuestionsViewModel viewModel;
-    private LinearLayout container;   // Dentro del ScrollView en fragment_questions_lateral.xml
-    private Button btnContinuar;      // Botón “Continuar”
-    private int totalCriterios = 0;   // Número total de criterios en la sección “VISIÓN LATERAL”
+    private LinearLayout container;
+    private Button btnContinuar;
+    private int totalCriterios = 0;
 
-    // Video-related fields:
     private VideoView videoView;
     private FrameLayout frameVideoContainer;
     private ActivityResultLauncher<String> pickVideoLauncher;
@@ -55,13 +54,11 @@ public class LateralFragment extends Fragment {
         videoView = view.findViewById(R.id.videoViewLateral);
         frameVideoContainer = view.findViewById(R.id.frameVideoContainer);
 
-        // 1) Let the MediaController overlay the VideoView
         videoView.setZOrderMediaOverlay(true);
         MediaController mediaController = new MediaController(requireContext());
         mediaController.setAnchorView(videoView);
         videoView.setMediaController(mediaController);
 
-        // 2) Register a launcher to pick “video/*” from gallery
         pickVideoLauncher = registerForActivityResult(
                 new ActivityResultContracts.GetContent(),
                 uri -> {
@@ -78,7 +75,6 @@ public class LateralFragment extends Fragment {
                 }
         );
 
-        // 3) “Seleccionar video” button in the XML
         Button btnPickVideo = view.findViewById(R.id.btnPickVideoLateral);
         btnPickVideo.setOnClickListener(v -> pickVideoLauncher.launch("video/*"));
 
@@ -104,12 +100,10 @@ public class LateralFragment extends Fragment {
 
     private void renderLateralSection() {
         try {
-            // 1) Leer el estilo actual
             String style = viewModel.getSelectedStyle();
             if (style == null) style = "crol"; // Por defecto, en caso de error
             String assetFileName = "questions_" + style + ".json";
 
-            // 2) Abrir ese JSON desde /assets
             InputStream is = requireContext().getAssets().open(assetFileName);
             byte[] buffer = new byte[is.available()];
             is.read(buffer);
@@ -117,11 +111,9 @@ public class LateralFragment extends Fragment {
             String jsonText = new String(buffer, StandardCharsets.UTF_8);
             JSONObject root = new JSONObject(jsonText);
 
-            // 3) Obtener la sección “VISIÓN LATERAL” dentro del array “sections”
             if (!root.has("sections")) return;
             JSONArray sectionsArr = root.getJSONArray("sections");
 
-            // 4) Contar cuántos criterios hay en “VISIÓN LATERAL”
             totalCriterios = 0;
             for (int s = 0; s < sectionsArr.length(); s++) {
                 JSONObject sectObj = sectionsArr.getJSONObject(s);
@@ -136,7 +128,6 @@ public class LateralFragment extends Fragment {
                 }
             }
 
-            // 5) Título principal (“VISIÓN LATERAL”)
             TextView tvSection = new TextView(requireContext());
             tvSection.setText("VISIÓN LATERAL");
             tvSection.setTextSize(22f);
@@ -145,7 +136,6 @@ public class LateralFragment extends Fragment {
             tvSection.setPadding(dpToPx(12), dpToPx(12), dpToPx(12), dpToPx(12));
             container.addView(tvSection);
 
-            // 6) Iterar para renderizar subsecciones y criterios
             for (int s = 0; s < sectionsArr.length(); s++) {
                 JSONObject sectObj = sectionsArr.getJSONObject(s);
                 String sectionName = sectObj.optString("name", "");
@@ -156,7 +146,6 @@ public class LateralFragment extends Fragment {
                         JSONObject subObj = subsectionsArr.getJSONObject(i);
                         String subName = subObj.optString("name", "");
 
-                        // 6.a) Subtítulo de la subsección
                         TextView tvSub = new TextView(requireContext());
                         tvSub.setText(subName);
                         tvSub.setTextSize(20f);
@@ -164,13 +153,11 @@ public class LateralFragment extends Fragment {
                         tvSub.setPadding(dpToPx(12), dpToPx(16), dpToPx(12), dpToPx(4));
                         container.addView(tvSub);
 
-                        // 6.b) Iterar criterios
                         JSONArray criteriaArr = subObj.getJSONArray("criteria");
                         for (int c = 0; c < criteriaArr.length(); c++) {
                             String criterio = criteriaArr.getString(c);
                             String clave = "LATERAL|" + criterio;
 
-                            // Crear CardView por cada criterio
                             CardView card = new CardView(requireContext());
                             card.setCardBackgroundColor(0xFF090909);
 
@@ -218,14 +205,12 @@ public class LateralFragment extends Fragment {
                             rbNo.setId(View.generateViewId());
                             rg.addView(rbNo);
 
-                            // Restaurar selección previa (si existe)
                             if (viewModel.tieneRespuesta(clave)) {
                                 boolean fueApto = viewModel.getRespuesta(clave);
                                 if (fueApto) rbSi.setChecked(true);
                                 else rbNo.setChecked(true);
                             }
 
-                            // Listener para guardar la respuesta y verificar si todas contestadas
                             rg.setOnCheckedChangeListener((group, checkedId) -> {
                                 boolean esApto = (checkedId == rbSi.getId());
                                 viewModel.setRespuesta(clave, esApto);
@@ -235,7 +220,6 @@ public class LateralFragment extends Fragment {
                                     btnContinuar.setEnabled(true);
                                 }
                             });
-
                             inner.addView(rg);
                             container.addView(card);
                         }
@@ -244,14 +228,12 @@ public class LateralFragment extends Fragment {
                 }
             }
 
-            // 7) Si en el ViewModel ya había respuestas previas, habilitar “Continuar” si están todas
             int inicialContestadas = viewModel.getNumContestadosEnSeccion("LATERAL");
             if (inicialContestadas >= totalCriterios) {
                 btnContinuar.setEnabled(true);
             }
 
         } catch (Exception e) {
-            // Mostrar mensaje de error en caso de fallo al parsear JSON
             TextView tvError = new TextView(requireContext());
             tvError.setText("Error cargando sección LATERAL:\n" + e.getMessage());
             tvError.setTextColor(0xFFFF0000);

@@ -30,11 +30,10 @@ import java.nio.charset.StandardCharsets;
 public class IntermediateFragment extends Fragment {
 
     private QuestionsViewModel viewModel;
-    private LinearLayout container;    // LinearLayout dentro de fragment_questions_lateral.xml
-    private Button btnContinuar;       // Botón “Continuar”
-    private int totalCriterios = 0;    // Cuenta total de criterios de “VISIÓN POSTERIOR”
+    private LinearLayout container;
+    private Button btnContinuar;
+    private int totalCriterios = 0;
 
-    // Video-related fields:
     private VideoView videoView;
     private FrameLayout frameVideoContainer;
     private ActivityResultLauncher<String> pickVideoLauncher;
@@ -44,7 +43,6 @@ public class IntermediateFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup containerParent,
                              Bundle savedInstanceState) {
-        // Reutilizamos el mismo layout que LateralFragment (fragment_questions_lateral.xml)
         return inflater.inflate(R.layout.fragment_questions_lateral, containerParent, false);
     }
 
@@ -87,7 +85,6 @@ public class IntermediateFragment extends Fragment {
 
         renderPosteriorSection();
 
-        // Al pulsar “Continuar” → FrontalFragment
         btnContinuar.setOnClickListener(v ->
                 Navigation.findNavController(v)
                         .navigate(R.id.action_intermediate_to_frontal)
@@ -96,12 +93,10 @@ public class IntermediateFragment extends Fragment {
 
     private void renderPosteriorSection() {
         try {
-            // 1) Leer el estilo (debe ser “braza” si llegamos aquí)
             String style = viewModel.getSelectedStyle();
             if (style == null) style = "braza";
             String assetFileName = "questions_" + style + ".json";
 
-            // 2) Abrir JSON
             InputStream is = requireContext().getAssets().open(assetFileName);
             byte[] buffer = new byte[is.available()];
             is.read(buffer);
@@ -109,11 +104,9 @@ public class IntermediateFragment extends Fragment {
             String jsonText = new String(buffer, StandardCharsets.UTF_8);
             JSONObject root = new JSONObject(jsonText);
 
-            // 3) Buscar la sección “VISIÓN POSTERIOR”
             if (!root.has("sections")) return;
             JSONArray sectionsArr = root.getJSONArray("sections");
 
-            // 4) Contar cuántos criterios hay en “VISIÓN POSTERIOR”
             totalCriterios = 0;
             for (int s = 0; s < sectionsArr.length(); s++) {
                 JSONObject sectObj = sectionsArr.getJSONObject(s);
@@ -128,7 +121,6 @@ public class IntermediateFragment extends Fragment {
                 }
             }
 
-            // 5) Título principal “VISIÓN POSTERIOR”
             TextView tvSection = new TextView(requireContext());
             tvSection.setText("VISIÓN POSTERIOR");
             tvSection.setTextSize(22f);
@@ -137,7 +129,6 @@ public class IntermediateFragment extends Fragment {
             tvSection.setPadding(dpToPx(12), dpToPx(12), dpToPx(12), dpToPx(12));
             container.addView(tvSection);
 
-            // 6) Iterar subsecciones y criterios
             for (int s = 0; s < sectionsArr.length(); s++) {
                 JSONObject sectObj = sectionsArr.getJSONObject(s);
                 String sectionName = sectObj.optString("name", "");
@@ -148,7 +139,6 @@ public class IntermediateFragment extends Fragment {
                         JSONObject subObj = subsectionsArr.getJSONObject(i);
                         String subName = subObj.optString("name", "");
 
-                        // 6.a) Subtítulo de subsección
                         TextView tvSub = new TextView(requireContext());
                         tvSub.setText(subName);
                         tvSub.setTextSize(20f);
@@ -156,7 +146,6 @@ public class IntermediateFragment extends Fragment {
                         tvSub.setPadding(dpToPx(12), dpToPx(16), dpToPx(12), dpToPx(4));
                         container.addView(tvSub);
 
-                        // 6.b) Iterar criterios
                         JSONArray criteriaArr = subObj.getJSONArray("criteria");
                         for (int c = 0; c < criteriaArr.length(); c++) {
                             String criterio = criteriaArr.getString(c);
@@ -208,14 +197,12 @@ public class IntermediateFragment extends Fragment {
                             rbNo.setId(View.generateViewId());
                             rg.addView(rbNo);
 
-                            // Restaurar selección previa
                             if (viewModel.tieneRespuesta(clave)) {
                                 boolean fueApto = viewModel.getRespuesta(clave);
                                 if (fueApto) rbSi.setChecked(true);
                                 else rbNo.setChecked(true);
                             }
 
-                            // Listener
                             rg.setOnCheckedChangeListener((group, checkedId) -> {
                                 boolean esApto = (checkedId == rbSi.getId());
                                 viewModel.setRespuesta(clave, esApto);
@@ -234,7 +221,6 @@ public class IntermediateFragment extends Fragment {
                 }
             }
 
-            // 7) Habilitar “Continuar” si ya estaban todas contestadas
             int inicialContestadas = viewModel.getNumContestadosEnSeccion("POSTERIOR");
             if (inicialContestadas >= totalCriterios) {
                 btnContinuar.setEnabled(true);

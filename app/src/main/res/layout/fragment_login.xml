@@ -26,18 +26,20 @@
         android:layout_marginTop="24dp"
         android:textColor="#FFFFFF"
         android:textColorHint="#BBBBBB"
-        android:backgroundTint="#FFFFFF"/>
+        android:backgroundTint="#FFFFFF"
+        android:maxLength="50"/>
 
     <EditText
         android:id="@+id/etPassword"
-        android:hint="Contraseña"
+        android:hint="Contraseña (≥6)"
         android:inputType="textPassword"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="#FFFFFF"
         android:textColorHint="#BBBBBB"
-        android:backgroundTint="#FFFFFF"/>
+        android:backgroundTint="#FFFFFF"
+        android:maxLength="50"/>
 
     <Button
         android:id="@+id/btnEmailLogin"

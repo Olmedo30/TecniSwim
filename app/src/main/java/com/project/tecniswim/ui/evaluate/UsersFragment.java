@@ -192,14 +192,12 @@ public class UsersFragment extends Fragment {
             String tecnicoNombre
     ) {
         try {
-            // 0) Cargar ejercicios.json
             InputStream ejIs = requireContext().getAssets().open("ejercicios.json");
             byte[] ejBuf = new byte[ejIs.available()];
             ejIs.read(ejBuf);
             ejIs.close();
             JSONObject ejerciciosRoot = new JSONObject(new String(ejBuf, StandardCharsets.UTF_8));
 
-            // 1) Leer JSON de preguntas
             String estilo = viewModel.getSelectedStyle();
             if (estilo == null) estilo = "crol";
             InputStream is = requireContext().getAssets().open("questions_" + estilo.toLowerCase() + ".json");
@@ -208,13 +206,11 @@ public class UsersFragment extends Fragment {
             is.close();
             JSONObject root = new JSONObject(new String(buf, StandardCharsets.UTF_8));
 
-            // 2) Crear PDF A4
             PdfDocument doc = new PdfDocument();
             PdfDocument.PageInfo info = new PdfDocument.PageInfo.Builder(595, 842, 1).create();
             PdfDocument.Page page = doc.startPage(info);
             Canvas canvas = page.getCanvas();
 
-            // 3) Paints básicos
             Paint titlePaint = new Paint();
             titlePaint.setColor(Color.BLACK);
             titlePaint.setTypeface(Typeface.create(Typeface.DEFAULT_BOLD, Typeface.BOLD));
@@ -244,23 +240,19 @@ public class UsersFragment extends Fragment {
             markPaint.setTextSize(12);
             markPaint.setTextAlign(Paint.Align.CENTER);
 
-            // 4) Márgenes y posición inicial
             final int xM = 40, bottomM = 60;
             int y = 40;
 
-            // título
             canvas.drawText("Informe de Evaluación - " + estilo.toUpperCase(),
                     info.getPageWidth() / 2f, y, titlePaint);
             y += 30;
 
-            // técnico
             if (tecnicoNombre == null || tecnicoNombre.isEmpty()) {
                 tecnicoNombre = "Técnico desconocido";
             }
             canvas.drawText("Técnico: " + tecnicoNombre, xM, y, infoPaint);
             y += 20;
 
-            // nadador
             canvas.drawText("Nadador: " + destinatarioNombre, xM, y, infoPaint);
             y += 20;
             canvas.drawText("Correo: " + destinatarioEmail, xM, y, infoPaint);
@@ -274,7 +266,6 @@ public class UsersFragment extends Fragment {
             float yesX = xM + textW + (columnWidth / 2f);
             float noX  = xM + textW + (columnWidth * 1.5f);
 
-            // 5) Recorrer secciones
             JSONArray sections = root.optJSONArray("sections");
             if (sections != null) {
                 for (int si = 0; si < sections.length(); si++) {

@@ -26,7 +26,8 @@
         android:layout_height="wrap_content"
         android:textColor="#FFFFFF"
         android:textColorHint="#BBBBBB"
-        android:backgroundTint="#FFFFFF" />
+        android:backgroundTint="#FFFFFF"
+        android:maxLength="50"/>
 
     <EditText
         android:id="@+id/etLastName"
@@ -37,7 +38,8 @@
         android:layout_height="wrap_content"
         android:textColor="#FFFFFF"
         android:textColorHint="#BBBBBB"
-        android:backgroundTint="#FFFFFF" />
+        android:backgroundTint="#FFFFFF"
+        android:maxLength="50"/>
 
     <EditText
         android:id="@+id/etEmail"
@@ -48,7 +50,8 @@
         android:layout_height="wrap_content"
         android:textColor="#FFFFFF"
         android:textColorHint="#BBBBBB"
-        android:backgroundTint="#FFFFFF" />
+        android:backgroundTint="#FFFFFF"
+        android:maxLength="50"/>
 
     <EditText
         android:id="@+id/etPassword"
@@ -59,7 +62,8 @@
         android:layout_height="wrap_content"
         android:textColor="#FFFFFF"
         android:textColorHint="#BBBBBB"
-        android:backgroundTint="#FFFFFF" />
+        android:backgroundTint="#FFFFFF"
+        android:maxLength="50"/>
 
     <Button
         android:id="@+id/btnRegister"

@@ -32,7 +32,6 @@ public class QuestionsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         container = view.findViewById(R.id.containerQuestions);
 
-        // 0) Leer “style” del Bundle
         String style = "crol";
         Bundle args = getArguments();
         if (args != null && args.containsKey("style")) {
@@ -40,19 +39,13 @@ public class QuestionsFragment extends Fragment {
         }
 
         try {
-            // 1) Abrir siempre el mismo JSON: “questions.json”
             InputStream is = requireContext().getAssets().open("questions.json");
             byte[] buffer = new byte[is.available()];
             is.read(buffer);
             is.close();
             String jsonText = new String(buffer, StandardCharsets.UTF_8);
             JSONObject rootAll = new JSONObject(jsonText);
-
-            // 2) Extraer el objeto correspondiente al estilo: rootAll.getJSONObject(style)
-            //    Por ejemplo: “crol”, “espalda”, “braza” o “mariposa”
             JSONObject root = rootAll.getJSONObject(style);
-
-            // 3) Mostrar título principal: usar el campo “style” dentro del JSON
             String estiloJSON = root.optString("style", style.toUpperCase());
             TextView tvTitle = new TextView(requireContext());
             tvTitle.setText(estiloJSON);
@@ -61,24 +54,19 @@ public class QuestionsFragment extends Fragment {
             tvTitle.setPadding(0, 0, 0, dpToPx(16));
             container.addView(tvTitle);
 
-            // 4) Iterar secciones dentro de este objeto
             JSONArray sectionsArray = root.getJSONArray("sections");
             for (int s = 0; s < sectionsArray.length(); s++) {
                 JSONObject sectionObj = sectionsArray.getJSONObject(s);
                 String sectionName = sectionObj.optString("name", "");
-
-                // — Crear TableLayout para esta sección
                 TableLayout table = new TableLayout(requireContext());
                 table.setStretchAllColumns(true);
                 table.setShrinkAllColumns(true);
                 table.setPadding(0, dpToPx(8), 0, dpToPx(24));
 
-                // 4.a) Divider horizontal
                 ColorDrawable dividerDrawable = new ColorDrawable(Color.parseColor("#90CAF9"));
                 table.setDividerDrawable(dividerDrawable);
                 table.setShowDividers(TableLayout.SHOW_DIVIDER_MIDDLE);
 
-                // 4.b) Fila de encabezado de sección (colspan=2)
                 TableRow rowSection = new TableRow(requireContext());
                 rowSection.setBackgroundColor(Color.parseColor("#90CAF9"));
                 TextView tvSection = new TextView(requireContext());
@@ -92,13 +80,11 @@ public class QuestionsFragment extends Fragment {
                 rowSection.addView(tvSection);
                 table.addView(rowSection);
 
-                // 4.c) Iterar subsecciones
                 JSONArray subsectionsArr = sectionObj.getJSONArray("subsections");
                 for (int ss = 0; ss < subsectionsArr.length(); ss++) {
                     JSONObject subObj = subsectionsArr.getJSONObject(ss);
                     String subName = subObj.optString("name", "");
 
-                    // 4.c.1) Fila de subtítulo de subsección (colspan=2)
                     TableRow rowSub = new TableRow(requireContext());
                     rowSub.setBackgroundColor(Color.parseColor("#BBDEFB"));
                     TextView tvSub = new TextView(requireContext());
@@ -112,12 +98,10 @@ public class QuestionsFragment extends Fragment {
                     rowSub.addView(tvSub);
                     table.addView(rowSub);
 
-                    // 4.c.2) Iterar “criteria”
                     JSONArray criteriaArr = subObj.getJSONArray("criteria");
                     for (int c = 0; c < criteriaArr.length(); c++) {
                         String criterio = criteriaArr.getString(c);
 
-                        // 4.c.2.a) Fila de texto de criterio
                         TableRow rowCritText = new TableRow(requireContext());
                         if (c % 2 == 0) {
                             rowCritText.setBackgroundColor(Color.parseColor("#FFFFFF"));
@@ -135,7 +119,6 @@ public class QuestionsFragment extends Fragment {
                         rowCritText.addView(tvCrit);
                         table.addView(rowCritText);
 
-                        // 4.c.2.b) Fila de opciones (RadioGroup)
                         TableRow rowCritOpts = new TableRow(requireContext());
                         if (c % 2 == 0) {
                             rowCritOpts.setBackgroundColor(Color.parseColor("#FFFFFF"));
@@ -174,7 +157,6 @@ public class QuestionsFragment extends Fragment {
                     }
                 }
 
-                // 5) Añadir la tabla al contenedor principal
                 container.addView(table);
             }
 

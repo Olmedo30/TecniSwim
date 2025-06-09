@@ -34,7 +34,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
     public void updateList(List<UserItem> newList) {
         originalList.clear();
         originalList.addAll(newList);
-        filter(""); // actualizar filteredList
+        filter("");
     }
 
     public void filter(String query) {
@@ -93,9 +93,8 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
             tvName.setText(fullName);
             tvEmail.setText(user.getEmail());
 
-            // Animación o marca para el elemento seleccionado
             if (position == selectedPosition) {
-                itemView.setBackgroundColor(0x8034A853); // semitransparente verde
+                itemView.setBackgroundColor(0x8034A853);
             } else {
                 itemView.setBackgroundColor(Color.TRANSPARENT);
             }

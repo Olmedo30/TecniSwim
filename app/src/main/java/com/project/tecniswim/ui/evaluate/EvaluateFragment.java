@@ -39,16 +39,11 @@ public class EvaluateFragment extends Fragment {
                 .get(QuestionsViewModel.class);
 
         View.OnClickListener styleClick = view -> {
-            // 1) Reactivar todos
             btnCrawl.setEnabled(true);
             btnBackstroke.setEnabled(true);
             btnBreaststroke.setEnabled(true);
             btnButterfly.setEnabled(true);
-
-            // 2) Desactivar el pulsado
             view.setEnabled(false);
-
-            // 3) Detectar cuál fue pulsado
             int id = view.getId();
             if (id == R.id.btnCrawl) {
                 selectedStyle = "crol";
@@ -60,10 +55,7 @@ public class EvaluateFragment extends Fragment {
                 selectedStyle = "mariposa";
             }
 
-            // 4) Guardar estilo en el ViewModel
             viewModel.setSelectedStyle(selectedStyle);
-
-            // 5) Navegar siempre a LateralFragment (desde Lateral luego se decide si ir a Intermediate o Frontal)
             Navigation.findNavController(view)
                     .navigate(R.id.action_evaluate_to_lateral);
         };

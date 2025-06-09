@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -37,17 +36,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         setSupportActionBar(binding.appBarMain.toolbar);
 
-        // Configure GoogleSignInClient for logout
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
         googleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        // Set up DrawerLayout and NavigationView
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navView = binding.navView;
 
-        // Include evaluateFragment as a top-level destination so the hamburger icon appears there too
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_gallery,
                 R.id.nav_slideshow,
@@ -63,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
 
         navView.setCheckedItem(R.id.evaluateFragment);
 
-        // Header: load profile image, email, and set logout
         View header = navView.getHeaderView(0);
         TextView tvEmail   = header.findViewById(R.id.textView);
         Button btnLogout   = header.findViewById(R.id.btn_logout);
@@ -72,10 +67,7 @@ public class MainActivity extends AppCompatActivity {
         if (user != null) {
             Uri photoUrl = user.getPhotoUrl();
             if (photoUrl != null) {
-                // Actually load into ivProfile
-                Glide.with(this)
-                        .load(photoUrl)
-                        .circleCrop();
+                Glide.with(this).load(photoUrl).circleCrop();
             }
             tvEmail.setText(user.getEmail());
         }

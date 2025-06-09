@@ -70,8 +70,6 @@ public class SettingsFragment extends Fragment {
     }
 
     private void registerLaunchers() {
-
-        // Cámara (thumbnail)
         cameraLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 res -> {
@@ -209,7 +207,6 @@ public class SettingsFragment extends Fragment {
         if (u == null) return;
         String uid = u.getUid();
 
-        // 1) First attempt: load Firestore's "photoUrl" if non-empty
         db.collection("Usuarios").document(uid).get()
                 .addOnSuccessListener(snap -> {
                     if (!snap.exists()) {
@@ -217,27 +214,22 @@ public class SettingsFragment extends Fragment {
                         return;
                     }
 
-                    // a) Firestore’s photoUrl field
                     String firestorePhotoUrl = snap.getString("photoUrl");
                     String base64 = snap.getString("photoBase64");
 
                     if (!TextUtils.isEmpty(firestorePhotoUrl)) {
-                        // Priority: Firestore external URL
                         externalPhotoUrl = firestorePhotoUrl;
                         Glide.with(this)
                                 .load(firestorePhotoUrl)
                                 .circleCrop()
                                 .into(ivProfile);
                     } else if (!TextUtils.isEmpty(base64)) {
-                        // Next priority: stored Base64
                         setBitmapFromBase64(base64);
                         externalPhotoUrl = "";
                     } else {
-                        // Otherwise fall back to auth’s photoUrl or placeholder
                         loadAuthOrDefault(u);
                     }
 
-                    // b) Email and name fields from Firestore (unchanged)
                     tvEmail.setText("Email: " + nullToEmpty(snap.getString("email")));
 
                     String googleName = u.getDisplayName();
@@ -257,7 +249,6 @@ public class SettingsFragment extends Fragment {
                 .addOnFailureListener(e -> {
                     Toast.makeText(requireContext(),
                             "Error al cargar datos", Toast.LENGTH_SHORT).show();
-                    // If Firestore fails, still attempt auth fallback
                     FirebaseUser u2 = auth.getCurrentUser();
                     if (u2 != null) loadAuthOrDefault(u2);
                 });
@@ -302,11 +293,9 @@ public class SettingsFragment extends Fragment {
 
         Map<String,Object> data = new HashMap<>();
         if (!TextUtils.isEmpty(externalPhotoUrl)) {
-            // Save only the URL; clear Base64 field
             data.put("photoUrl", externalPhotoUrl);
             data.put("photoBase64", "");
         } else {
-            // Save Base64; clear any existing URL
             data.put("photoUrl", "");
             data.put("photoBase64", bitmapToBase64(currentBitmap));
         }

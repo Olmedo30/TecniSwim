@@ -14,7 +14,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.firebase.ui.auth.AuthUI;
-import com.firebase.ui.auth.IdpResponse;
 import com.google.android.gms.common.SignInButton;
 import com.google.firebase.auth.*;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -84,7 +83,6 @@ public class LoginFragment extends Fragment {
                     if (task.isSuccessful()) {
                         FirebaseUser user = auth.getCurrentUser();
                         if (user != null && user.isEmailVerified()) {
-                            // No añadimos a Firestore aquí (solo Google)
                             goToMain();
                         } else {
                             Toast.makeText(getContext(),
@@ -123,7 +121,6 @@ public class LoginFragment extends Fragment {
             FirebaseUser user = auth.getCurrentUser();
             if (user == null) return;
 
-            // Construimos el Map con todos los campos (vacíos los extras)
             Map<String,Object> usuario = new HashMap<>();
             usuario.put("uid",         user.getUid());
             usuario.put("email",       user.getEmail());
@@ -131,16 +128,14 @@ public class LoginFragment extends Fragment {
             usuario.put("photoUrl",    user.getPhotoUrl() != null
                     ? user.getPhotoUrl().toString()
                     : null);
-            // Campos extra a rellenar más adelante
             usuario.put("firstName",  "");
             usuario.put("lastName",   "");
             usuario.put("nickname",   "");
             usuario.put("clase",      "");
 
-            // Guardamos en la colección "Usuarios"
             db.collection("Usuarios")
                     .document(user.getUid())
-                    .set(usuario, SetOptions.merge())  // merge para no machacar si ya existe
+                    .set(usuario, SetOptions.merge())
                     .addOnSuccessListener(aVoid -> goToMain())
                     .addOnFailureListener(e ->
                             Toast.makeText(getContext(),

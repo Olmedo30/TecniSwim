@@ -15,7 +15,8 @@
         android:inputType="text"
         android:textColor="@android:color/white"
         android:drawablePadding="8dp"
-        android:drawableStart="@android:drawable/ic_menu_search"/>
+        android:drawableStart="@android:drawable/ic_menu_search"
+        android:maxLength="50"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvUsersList"
