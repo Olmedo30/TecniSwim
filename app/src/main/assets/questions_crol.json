@@ -1,0 +1,78 @@
+{
+  "style": "CROL",
+  "sections": [
+    {
+      "name": "VISIÓN LATERAL",
+      "subsections": [
+        {
+          "name": "POSICIÓN del CUERPO",
+          "criteria": [
+            "Buena posición horizontal y plana",
+            "Cabeza ligeramente levantada y mirada hacia delante y hacia abajo",
+            "Cadera cerca de la superficie"
+          ]
+        },
+        {
+          "name": "ACCIÓN de las PIERNAS",
+          "criteria": [
+            "El movimiento parte de la cadera",
+            "Profundidad y amplitud correcta del batido (piernas ni demasiado hundidas ni por fuera del agua)",
+            "Movimiento alternativo de piernas de manera constante",
+            "Las plantas de los pies rompen la superficie del agua",
+            "Flexión correcta de las rodillas (ni demasiado extendidas ni demasiado flexionadas tipo “bicicleta”)",
+            "Tobillos extendidos y relajados"
+          ]
+        },
+        {
+          "name": "ACCIÓN de los BRAZOS",
+          "criteria": [
+            "Entrada limpia de la mano (sin salpicar demasiado)",
+            "Orden de ENTRADA: mano, codo, hombro",
+            "Nada más entrar, el brazo se extiende hacia delante y hacia abajo (desliza)",
+            "Orden de SALIDA: hombro, codo, mano",
+            "La mano sale del agua cerca del muslo",
+            "Durante el recobro, el brazo va flexionado con el codo más alto que la mano",
+            "Durante el recobro, la mano va cerca del agua"
+          ]
+        },
+        {
+          "name": "RESPIRACIÓN",
+          "criteria": [
+            "Respiración lateral sin levantar la cabeza",
+            "La cara se mantiene apoyada en el agua"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "VISIÓN FRONTAL",
+      "subsections": [
+        {
+          "name": "POSICIÓN del CUERPO",
+          "criteria": [
+            "Realización de rolido (giro del cuerpo sobre el eje longitudinal)",
+            "El cuerpo se desliza recto sin movimientos laterales de cadera"
+          ]
+        },
+        {
+          "name": "ACCIÓN de las PIERNAS",
+          "criteria": [
+            "Las plantas de los pies rompen la superficie del agua",
+            "Correcta separación de piernas (no muy separadas)",
+            "Tobillos extendidos y relajados"
+          ]
+        },
+        {
+          "name": "ACCIÓN de los BRAZOS",
+          "criteria": [
+            "Entrada limpia de la mano (sin salpicar demasiado)",
+            "Dedos de las manos ni demasiado juntos ni demasiado separados",
+            "Orden de ENTRADA: mano, codo, hombro",
+            "La mano entra enfrente del hombro y con el codo alto",
+            "Orden de SALIDA: hombro, codo, mano"
+          ]
+        }
+      ]
+    }
+  ]
+}

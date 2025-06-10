@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -23,6 +22,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.project.tecniswim.databinding.ActivityMainBinding;
+import com.project.tecniswim.ui.login.LoginActivity;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
@@ -32,66 +32,67 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Inflate & setup
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setSupportActionBar(binding.appBarMain.toolbar);
 
-        // Inicializa GoogleSignInClient (para logout)
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
         googleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        // Setup de Navigation Drawer
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navView = binding.navView;
+
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                R.id.nav_gallery,
+                R.id.nav_slideshow,
+                R.id.evaluateFragment
+        )
                 .setOpenableLayout(drawer)
                 .build();
+
         NavController navController = Navigation.findNavController(this,
                 R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-        // Obtén el header y sus vistas
+        navView.setCheckedItem(R.id.evaluateFragment);
+
         View header = navView.getHeaderView(0);
-        ImageView ivProfile = header.findViewById(R.id.imageView);
         TextView tvEmail   = header.findViewById(R.id.textView);
         Button btnLogout   = header.findViewById(R.id.btn_logout);
 
-        // Rellena con datos de usuario
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            // 1) Foto de perfil
             Uri photoUrl = user.getPhotoUrl();
             if (photoUrl != null) {
-                Glide.with(this)
-                        .load(photoUrl)
-                        .circleCrop()
-                        .into(ivProfile);
+                Glide.with(this).load(photoUrl).circleCrop();
             }
-            // 2) Correo
             tvEmail.setText(user.getEmail());
         }
 
-        // Listener de Logout
         btnLogout.setOnClickListener(v -> {
-            // FirebaseAuth
             FirebaseAuth.getInstance().signOut();
-            // FirebaseUI
-            AuthUI.getInstance().signOut(MainActivity.this)
-                    .addOnCompleteListener(task -> {
-                        // GoogleSignInClient
-                        googleSignInClient.signOut()
-                                .addOnCompleteListener(task2 -> {
-                                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                                    finish();
-                                });
-                    });
+            AuthUI.getInstance().signOut(this)
+                    .addOnCompleteListener(task ->
+                            googleSignInClient.signOut()
+                                    .addOnCompleteListener(t2 -> redirectToLogin())
+                    );
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            redirectToLogin();
+        }
+    }
+
+    private void redirectToLogin() {
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 
     @Override

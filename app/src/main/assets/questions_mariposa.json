@@ -1,0 +1,71 @@
+{
+  "style": "MARIPOSA",
+  "sections": [
+    {
+      "name": "VISIÓN LATERAL",
+      "subsections": [
+        {
+          "name": "POSICIÓN del CUERPO",
+          "criteria": [
+            "Durante el nado, el cuerpo describe un movimiento ondulatorio de los pies a la cabeza",
+            "La cadera asciende y desciende actuando como eje del movimiento",
+            "La cabeza no se eleva demasiado y la barbilla se mantiene cerca de la superficie"
+          ]
+        },
+        {
+          "name": "ACCIÓN de las PIERNAS",
+          "criteria": [
+            "Las piernas van juntas con un movimiento simétrico y simultáneo",
+            "El movimiento parte de la cadera",
+            "Los pies se mantienen juntos con los tobillos extendidos y relajados",
+            "Las plantas de los pies rompen la superficie del agua"
+          ]
+        },
+        {
+          "name": "ACCIÓN de los BRAZOS",
+          "criteria": [
+            "Las manos entran con la palma mirando hacia fuera y el dedo pulgar primero",
+            "Los brazos salen del agua casi extendidos y los codos más altos que las manos",
+            "Las manos salen del agua a la altura del muslo",
+            "Durante el recobro, los brazos van extendidos y relajados"
+          ]
+        },
+        {
+          "name": "COORDINACIÓN Brazos-Piernas",
+          "criteria": [
+            "Realiza 2 patadas por brazada",
+            "La 1ª patada coincide cuando las manos entran en el agua",
+            "La 2ª patada coincide justo antes de salir las manos del agua (final de la tracción: fase de empuje)"
+          ]
+        },
+        {
+          "name": "COORDINACIÓN Brazos-Respiración",
+          "criteria": [
+            "La cabeza entra en el agua (por la frente), antes que las manos",
+            "La cabeza sale del agua antes que las manos (al final de la tracción)"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "VISIÓN FRONTAL",
+      "subsections": [
+        {
+          "name": "ACCIÓN de los BRAZOS",
+          "criteria": [
+            "Las manos entran en el agua con los brazos extendidos y a la anchura de los hombros",
+            "Las manos entran con la palma mirando hacia fuera y el dedo pulgar primero",
+            "Durante el recobro, los brazos van extendidos y relajados"
+          ]
+        },
+        {
+          "name": "COORDINACIÓN Brazos-Respiración",
+          "criteria": [
+            "La cabeza entra en el agua (por la frente), antes que las manos",
+            "La cabeza sale del agua antes que las manos (al final de la tracción)"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "style": "ESPALDA",
+  "sections": [
+    {
+      "name": "VISIÓN LATERAL",
+      "subsections": [
+        {
+          "name": "POSICIÓN del CUERPO",
+          "criteria": [
+            "Cuerpo ligeramente inclinado y extendido, evitando una posición de “sentado”",
+            "Cabeza fija y cara sobre la superficie (línea del agua justo debajo de las orejas)",
+            "Pecho elevado",
+            "Cadera y muslos cerca de la superficie"
+          ]
+        },
+        {
+          "name": "ACCIÓN de las PIERNAS",
+          "criteria": [
+            "El movimiento parte de la cadera (sin demasiada flexión de rodillas)",
+            "Las rodillas no salen del agua",
+            "Las plantas de los pies rompen la superficie del agua",
+            "Tobillos relajados y pies en extensión",
+            "Movimiento alternativo de piernas de manera constante",
+            "Amplitud correcta (movimiento ni demasiado amplio ni demasiado corto)"
+          ]
+        },
+        {
+          "name": "ACCIÓN de los BRAZOS",
+          "criteria": [
+            "Entrada limpia de la mano (sin salpicar demasiado)",
+            "Dedos de las manos ni demasiado juntos ni demasiado separados",
+            "El brazo entra en el agua completamente extendido",
+            "La mano entra y coge profundidad (agarre profundo)",
+            "Sin parada al comienzo y al final de la brazada",
+            "Orden de aparición sobre la superficie: hombro, brazo y mano",
+            "Recobro con el brazo totalmente extendido y una trayectoria recta"
+          ]
+        },
+        {
+          "name": "RESPIRACIÓN",
+          "criteria": [
+            "Respiración regular"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "VISIÓN FRONTAL",
+      "subsections": [
+        {
+          "name": "POSICIÓN del CUERPO",
+          "criteria": [
+            "El cuerpo se desliza recto sin movimientos laterales",
+            "Realización de rolido (giro del cuerpo sobre el eje longitudinal). Los hombros van girando aprox. 45º"
+          ]
+        },
+        {
+          "name": "ACCIÓN de las PIERNAS",
+          "criteria": [
+            "Tobillos relajados y pies en extensión",
+            "Movimiento alternativo de piernas de manera constante",
+            "Correcta separación de piernas (no abiertas y muy separadas)"
+          ]
+        },
+        {
+          "name": "ACCIÓN de los BRAZOS",
+          "criteria": [
+            "Entrada limpia de la mano (sin salpicar demasiado)",
+            "Dedos de las manos ni demasiado juntos ni demasiado separados",
+            "El brazo entra en el agua completamente extendido",
+            "La mano entra en línea con el hombro y con la palma mirando hacia fuera (dedo meñique primero)",
+            "La mano hace una salida limpia y pegada al cuerpo",
+            "Recobro con el brazo totalmente extendido y una trayectoria recta"
+          ]
+        }
+      ]
+    }
+  ]
+}
